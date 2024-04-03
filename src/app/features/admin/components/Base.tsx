@@ -1,7 +1,7 @@
 "use client"
 import { Badge, Button, Card, Group, Image, Text } from '@mantine/core'
 import React, { useEffect, useState } from 'react'
-import * as HomeCompont from "@/app/features/home/components/Index"
+import * as Admin from "@/app/features/admin/components/Index"
 import { getProducts } from '@/api'
 import { Product } from '@/types/response'
 
@@ -24,7 +24,7 @@ const Base = () => {
     <div className="flex flex-wrap justify-center">
       {products.map((product) => (
         <div key={product.id} className="mx-1 my-1">
-          <HomeCompont.ProductCard
+          <Admin.ProductCardAdmin
             product={product}
           />
         </div>

@@ -22,7 +22,7 @@ export default function RootLayout({
       <body className="bg-[#F2E8DE] text-[#4C331F]">
         <MantineProvider>
           <Header/>
-          <div className="mx-10">
+          <div className="mx-2 md:mx-10 mt-2 md:mt-5">
            {children}
           </div>
          </MantineProvider>

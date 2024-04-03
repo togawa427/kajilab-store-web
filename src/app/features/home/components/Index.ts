@@ -1,3 +1,4 @@
 import Base from "./Base";
+import ProductCard from "./ProductCard";
 
-export { Base };
+export { Base, ProductCard };
