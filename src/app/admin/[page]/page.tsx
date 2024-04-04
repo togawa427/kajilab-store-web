@@ -4,12 +4,11 @@ import * as Admin from "@/app/features/admin/components/Index"
 export default async function AdminProductPage({
   params,
 }: {
-  params: {barcode: number};
+  params: {page: number};
 }) {
-  const product = await getProductByBarcode(params.barcode);
   return (
     <div>
-      <Admin.ProductEditor product={product}/>
+      <Admin.Base page={params.page}/>
     </div>
   )
 }
