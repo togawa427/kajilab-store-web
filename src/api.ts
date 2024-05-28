@@ -33,7 +33,7 @@ export const getProductByBarcode = async (barcode: number): Promise<Product> => 
 }
 
 export const getUserByBarcode = async (barcode: string): Promise<User> => {
-  const res = await fetch(`${baseURL}/api/v1/users/1080123456788`)
+  const res = await fetch(`${baseURL}/api/v1/users/${barcode}`)
 
   const user = await res.json()
   return user
