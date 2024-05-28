@@ -19,7 +19,9 @@ export default function RootLayout({
       <head>
         <ColorSchemeScript />
       </head>
-      <body className="bg-[#F2E8DE] text-[#4C331F]">
+      {/* <body className="bg-[#DEDBCE] text-[#55441E]"> */}
+      {/* <body className="bg-[url('https://www.kirby.jp/images/0427/bg-pattern.png')]"> */}
+      <body className="bg-[url('/header-bg.jpg')]">
         <MantineProvider>
           <Header/>
           <div className="mx-2 md:mx-10 mt-2 md:mt-5">
