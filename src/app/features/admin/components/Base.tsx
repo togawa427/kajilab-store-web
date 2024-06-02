@@ -28,16 +28,20 @@ const Base = ({page}: BasePropsType) => {
   return (
     <>
       <div className="text-center">
-        <Link href={`/admin/${(page-1)}`} className="mr-32">
-          <Button>
-            前へ
-          </Button>
-        </Link>
-        <Link href={`/admin/${(Number(page)+Number(1))}`}>
-          <Button>
-            次へ
-          </Button>
-        </Link>
+        {page > 1 && (
+          <Link href={`/admin/${(page-1)}`} className="mr-10">
+            <Button>
+              前へ
+            </Button>
+          </Link>
+        )}
+        {products.length == 20 && (
+          <Link href={`/admin/${(Number(page)+Number(1))}`} className="ml-10">
+            <Button>
+              次へ
+            </Button>
+          </Link>
+        )}
       </div>
       <div className="flex flex-wrap justify-center">
         {products.map((product) => (
@@ -49,16 +53,20 @@ const Base = ({page}: BasePropsType) => {
         ))}
       </div>
       <div className="text-center">
-        <Link href={`/admin/${(page-1)}`} className="mr-32">
-          <Button>
-            前へ
-          </Button>
-        </Link>
-        <Link href={`/admin/${(Number(page)+Number(1))}`}>
-          <Button>
-            次へ
-          </Button>
-        </Link>
+        {page > 1 && (
+          <Link href={`/admin/${(page-1)}`} className="mr-10">
+            <Button>
+              前へ
+            </Button>
+          </Link>
+        )}
+        {products.length == 20 && (
+          <Link href={`/admin/${(Number(page)+Number(1))}`} className="ml-10">
+            <Button>
+              次へ
+            </Button>
+          </Link>
+        )}
       </div>
     </>
   )

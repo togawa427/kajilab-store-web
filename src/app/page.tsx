@@ -4,7 +4,7 @@ import * as HomeCompont from "@/app/features/home/components/Index"
 export default function Home() {
   return (
     <div>
-      <HomeCompont.Base/>
+      <HomeCompont.Base page={1}/>
     </div>
   )
 }
