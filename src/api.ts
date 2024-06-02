@@ -1,4 +1,4 @@
-import { Product, User } from "./types/response";
+import { Payment, Product, User } from "./types/response";
 
 const baseURL = process.env.NEXT_PUBLIC_BASE_URL;
 
@@ -37,4 +37,13 @@ export const getUserByBarcode = async (barcode: string): Promise<User> => {
 
   const user = await res.json()
   return user
+}
+
+export const getPaymentByUserId = async (userId: number, limit: number, offset: number): Promise<Payment[]> => {
+  // const res = await fetch(`${baseURL}/api/v1/products/buy/logs/user/${userId}?limit=${limit}&&offset=${offset}`, {cache: "no-store"})
+  const res = await fetch(`${baseURL}/api/v1/products/buy/logs/user/${userId}?limit=${limit}&&offset=${offset}`, {cache: "no-store"})
+  console.log(res)
+
+  const payments = await res.json()
+  return payments
 }
