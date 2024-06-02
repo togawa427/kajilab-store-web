@@ -1,4 +1,4 @@
-import { Payment, Product, User } from "./types/response";
+import { Asset, Payment, Product, User } from "./types/response";
 
 const baseURL = process.env.NEXT_PUBLIC_BASE_URL;
 
@@ -46,4 +46,12 @@ export const getPaymentByUserId = async (userId: number, limit: number, offset: 
 
   const payments = await res.json()
   return payments
+}
+
+export const getCurrentAsset = async (): Promise<Asset> => {
+  const res = await fetch(`${baseURL}/api/v1/assets`, {cache: "no-store"})
+  console.log(res)
+
+  const asset = await res.json()
+  return asset
 }

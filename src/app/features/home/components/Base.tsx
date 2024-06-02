@@ -26,7 +26,7 @@ const Base = ({page}: BasePropsType) => {
   }, [page]);
 
   return (
-    <div>
+    <div className="mb-10">
       <div className="text-center">
         {page > 1 && (
           <Link href={`/${(page-1)}`} className="mr-10">

@@ -15,6 +15,11 @@ export type User = {
   barcode: string;
 }
 
+export type Asset = {
+  money: number;
+  debt: number;
+}
+
 export type Payment = {
   id: number;
   price: number;

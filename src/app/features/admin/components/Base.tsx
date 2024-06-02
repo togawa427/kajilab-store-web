@@ -3,14 +3,15 @@ import { Badge, Button, Card, Group, Image, Text } from '@mantine/core'
 import React, { useEffect, useState } from 'react'
 import * as Admin from "@/app/features/admin/components/Index"
 import { getPageProducts, getProducts } from '@/api'
-import { Product } from '@/types/response'
+import { Asset, Product } from '@/types/response'
 import Link from 'next/link'
 
 type BasePropsType = {
   page: number;
+  currentAsset: Asset;
 }
 
-const Base = ({page}: BasePropsType) => {
+const Base = ({page, currentAsset}: BasePropsType) => {
   const [products, setProducts] = useState<Product[]>([])
 
   useEffect(() => {
@@ -27,6 +28,10 @@ const Base = ({page}: BasePropsType) => {
 
   return (
     <>
+      <div className="text-end mb-4">
+        <div className="text-lg">商店残高（現金）：{currentAsset.money}円</div>
+        <div className="text-lg">商店負債（梶研Pay）：{currentAsset.debt}円</div>
+      </div>
       <div className="text-center">
         {page > 1 && (
           <Link href={`/admin/${(page-1)}`} className="mr-10">
