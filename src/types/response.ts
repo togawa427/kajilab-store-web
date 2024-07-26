@@ -20,6 +20,13 @@ export type Asset = {
   debt: number;
 }
 
+export type AssetHistory = {
+  date: Date,
+  money: number,
+  debt: number,
+  product: number
+}
+
 export type Payment = {
   id: number;
   price: number;

@@ -1,4 +1,4 @@
-import { Asset, Payment, Product, User } from "./types/response";
+import { Asset, AssetHistory, Payment, Product, User } from "./types/response";
 
 const baseURL = process.env.NEXT_PUBLIC_BASE_URL;
 
@@ -54,4 +54,11 @@ export const getCurrentAsset = async (): Promise<Asset> => {
 
   const asset = await res.json()
   return asset
+}
+
+export const getAssetHistory = async (day: number): Promise<AssetHistory[]> => {
+  const res = await fetch(`${baseURL}/api/v1/assets/history?day=${day}`, {next: {revalidate: 3600}})
+  
+  const assetHistory = await res.json()
+  return assetHistory
 }
