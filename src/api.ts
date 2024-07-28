@@ -57,7 +57,7 @@ export const getCurrentAsset = async (): Promise<Asset> => {
 }
 
 export const getAssetHistory = async (day: number): Promise<AssetHistory[]> => {
-  const res = await fetch(`${baseURL}/api/v1/assets/history?day=${day}`, {next: {revalidate: 3600}})
+  const res = await fetch(`${baseURL}/api/v1/assets/history?day=${day}`, {next: {revalidate: 10800}})
   
   const assetHistory = await res.json()
   return assetHistory
