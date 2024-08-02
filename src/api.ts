@@ -2,6 +2,15 @@ import { Asset, AssetHistory, Payment, Product, User } from "./types/response";
 
 const baseURL = process.env.NEXT_PUBLIC_BASE_URL;
 
+export const getAllProducts = async (): Promise<Product[]> => {
+  //const res = await fetch("http://localhost:8080/api/v1/products/buy/logs?limit=5", {cache: "no-store"})  // SSR
+  const res = await fetch(`${baseURL}/api/v1/products?limit=1000&&offset=0`, {cache: "no-store"})  // SSR
+  console.log(res)
+
+  const products = await res.json()
+  return products
+}
+
 export const getProducts = async (): Promise<Product[]> => {
   //const res = await fetch("http://localhost:8080/api/v1/products/buy/logs?limit=5", {cache: "no-store"})  // SSR
   const res = await fetch(`${baseURL}/api/v1/products?limit=20&&offset=0`, {cache: "no-store"})  // SSR
@@ -62,3 +71,37 @@ export const getAssetHistory = async (day: number): Promise<AssetHistory[]> => {
   const assetHistory = await res.json()
   return assetHistory
 }
+
+export const updateProduct = async (id: number, name: string, barcode: number, price: number, stock: number, tagId: number): Promise<number> => {
+  let requestProduct: UpdateProductType = {
+      id: id,
+      name: name,
+      barcode: barcode,
+      price: price,
+      stock: stock,
+      tag_id: tagId, 
+  }
+
+  const res = await fetch(`${baseURL}/api/v1/products`, {
+      method: "PUT",
+      headers: {
+          "Content-Type": "application/json",
+      },
+      body: JSON.stringify(requestProduct)
+  })
+
+  console.log(res.status)
+  return res.status
+}
+
+// export const deletePayment = async (id: number) => {
+//   const res = await fetch(`${baseURL}/api/v1/products/buy/${id}`, {method: "DELETE"});
+
+//   if(res.ok){
+//       console.log("削除に成功")
+//   }
+
+//   await new Promise((resolve) => setTimeout(resolve, 2000));
+
+//   return
+// }
