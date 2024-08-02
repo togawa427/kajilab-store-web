@@ -4,7 +4,8 @@ import { Product } from '@/types/response';
 import { Button, Card, Group, Image, Overlay, Text } from '@mantine/core'
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import * as Admin from "@/app/features/admin/components/Index"
 
 type ProductCardInventoryProps = {
   product: Product;
@@ -46,19 +47,32 @@ const ProductCardInventory = ({product}: ProductCardInventoryProps) => {
       )
     }
     localStorage.setItem(`is_inventory_${product.barcode}`, "true")
-    
     setIsChecked(true)
+    
     setIsLoading(false)
     router.push(`/admin/inventory`)
     router.refresh()
   }
 
   const cancelInventory = () => {
-    setIsChecked(false)
+    setIsLoading(true)
     localStorage.setItem(`is_inventory_${product.barcode}`, "false")
+    setIsChecked(false)
     router.push(`/admin/inventory`)
     router.refresh()
+    setIsLoading(false)
   }
+
+  useEffect (() => { 
+    // ここで localStorage にアクセスします
+    console.log("useEffectだよ")
+    let itemFromLocalStorage = localStorage.getItem(`is_inventory_${product.barcode}`)
+    if(itemFromLocalStorage != null){
+      if(itemFromLocalStorage == "true"){
+        setIsChecked(true)
+      }
+    }
+  },[]);
 
   return (
     <Card 
@@ -66,7 +80,7 @@ const ProductCardInventory = ({product}: ProductCardInventoryProps) => {
       padding="lg"
       radius="md"
       withBorder
-      className={`w-40 md:w-72 bg-slate-50 ${localStorage.getItem(`is_inventory_${product.barcode}`)=="true" ? 'text-gray-400' : ''}`}
+      className={`w-40 md:w-72 bg-slate-50 ${isChecked ? 'text-gray-400' : ''}`}
       
       // onClick={handleClickCard}
     >
@@ -96,7 +110,7 @@ const ProductCardInventory = ({product}: ProductCardInventoryProps) => {
           </div>
         </text>
       </div>
-      {localStorage.getItem(`is_inventory_${product.barcode}`)=="true" ? (
+      {isChecked ? (
         <Button fullWidth color='gray' onClick={cancelInventory}>
           キャンセル
         </Button>

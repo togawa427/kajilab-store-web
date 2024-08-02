@@ -14,3 +14,15 @@
 //   console.log(barcode)
 //   return 200
 // }
+
+export const getFromLocalStorage = (key: string): string => {
+  if (typeof window !== undefined) {
+    // Now it's safe to access window and localStorage
+    let itemFromLocalStorage = localStorage.getItem(key)
+    if(itemFromLocalStorage == null){
+      return ""
+    }
+    return itemFromLocalStorage
+  }
+  return ""
+}
