@@ -9,10 +9,11 @@ import * as Admin from "@/app/features/admin/components/Index"
 
 type ProductCardInventoryProps = {
   product: Product;
+  displayIsInventory: Boolean;
 }
 
 
-const ProductCardInventory = ({product}: ProductCardInventoryProps) => {
+const ProductCardInventory = ({product, displayIsInventory}: ProductCardInventoryProps) => {
   const [productStock, setProductStock] = useState(product.stock)
   const [isChecked, setIsChecked] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
@@ -50,7 +51,7 @@ const ProductCardInventory = ({product}: ProductCardInventoryProps) => {
     setIsChecked(true)
     
     setIsLoading(false)
-    router.push(`/admin/inventory`)
+    router.push(`/admin/inventory`, {scroll: false})
     router.refresh()
   }
 
@@ -58,7 +59,7 @@ const ProductCardInventory = ({product}: ProductCardInventoryProps) => {
     setIsLoading(true)
     localStorage.setItem(`is_inventory_${product.barcode}`, "false")
     setIsChecked(false)
-    router.push(`/admin/inventory`)
+    router.push(`/admin/inventory`, {scroll: false})
     router.refresh()
     setIsLoading(false)
   }
@@ -74,13 +75,16 @@ const ProductCardInventory = ({product}: ProductCardInventoryProps) => {
     }
   },[]);
 
+  if(displayIsInventory != isChecked){
+    return
+  }
   return (
     <Card 
       shadow="sm"
       padding="lg"
       radius="md"
       withBorder
-      className={`w-40 md:w-72 bg-slate-50 ${isChecked ? 'text-gray-400' : ''}`}
+      className={`w-40 md:w-72 bg-slate-50 mx-1 my-1 ${isChecked ? 'text-gray-400' : ''}`}
       
       // onClick={handleClickCard}
     >
@@ -119,13 +123,6 @@ const ProductCardInventory = ({product}: ProductCardInventoryProps) => {
           確定
         </Button>
       )}
-      {/* <Button fullWidth>
-        確定
-      </Button>
-      <Button fullWidth color='gray'>
-        キャンセル
-      </Button> */}
-      {/* <Overlay color='#eee' backgroundOpacity={0.5} blur={1}/> */}
     </Card>
   )
 }

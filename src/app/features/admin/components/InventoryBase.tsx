@@ -24,26 +24,16 @@ const InventoryBase = ({products}: InventoryBasePropsType) => {
     <>
       <Button color='red' onClick={resetInventory}>棚卸し状態をリセットする</Button>
       <div className="flex flex-wrap justify-center">
-        {/* {products.map((product) => (
+        {products.map((product) => (
           // 棚卸し完了していない商品
-          Admin.getFromLocalStorage(`is_inventory_${product.barcode}`) != "true" && (
-            <div key={product.id} className="mx-1 my-1">
-              <Admin.ProductCardInventory product={product}/>
+            <div key={product.id}>
+              <Admin.ProductCardInventory product={product} displayIsInventory={false}/>
             </div>
-          )
         ))}
         {products.map((product) => (
           // 棚卸し完了した商品
-          Admin.getFromLocalStorage(`is_inventory_${product.barcode}`) == "true" && (
-            <div key={product.id} className="mx-1 my-1">
-              <Admin.ProductCardInventory product={product}/>
-            </div>
-          )
-        ))} */}
-        {products.map((product) => (
-          // 棚卸し完了していない商品
-            <div key={product.id} className="mx-1 my-1">
-              <Admin.ProductCardInventory product={product}/>
+            <div key={product.id}>
+              <Admin.ProductCardInventory product={product} displayIsInventory={true}/>
             </div>
         ))}
       </div>
