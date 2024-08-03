@@ -30,14 +30,14 @@ const Base = ({page}: BasePropsType) => {
       <div className="text-center">
         {page > 1 && (
           <Link href={`/${(page-1)}`} className="mr-10">
-            <Button>
+            <Button color='#25526C' variant='outline'>
               前へ
             </Button>
           </Link>
         )}
         {products.length == 20 && (
           <Link href={`/${(Number(page)+Number(1))}`} className="ml-10">
-            <Button>
+            <Button color='#25526C' variant='outline'>
               次へ
             </Button>
           </Link>
@@ -55,14 +55,14 @@ const Base = ({page}: BasePropsType) => {
       <div className="text-center">
         {page > 1 && (
           <Link href={`/${(page-1)}`} className="mr-10">
-            <Button>
+            <Button color='#25526C' variant='outline'>
               前へ
             </Button>
           </Link>
         )}
         {products.length == 20 && (
           <Link href={`/${(Number(page)+Number(1))}`} className="ml-10">
-            <Button>
+            <Button color='#25526C' variant='outline'>
               次へ
             </Button>
           </Link>
