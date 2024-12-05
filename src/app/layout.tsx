@@ -5,8 +5,8 @@ import { ColorSchemeScript, MantineProvider } from '@mantine/core';
 import Header from './components/header';
 
 export const metadata = {
-  title: 'My Mantine app',
-  description: 'I have followed setup instructions carefully',
+  title: '梶研商店',
+  description: '梶研究室で運用されている梶研商店の在庫確認などができるWebサイト',
 };
 
 export default function RootLayout({
