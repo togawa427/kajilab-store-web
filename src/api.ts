@@ -58,9 +58,9 @@ export const getPaymentByUserId = async (userId: number, limit: number, offset: 
   return payments
 }
 
-export const getPaymentByDate = async (limit: number, year: number, month: number): Promise<Payment[]> => {
+export const getPaymentMonth = async (year: number, month: number): Promise<PaymentMonth> => {
   // const res = await fetch(`${baseURL}/api/v1/products/buy/logs/user/${userId}?limit=${limit}&&offset=${offset}`, {cache: "no-store"})
-  const res = await fetch(`${baseURL}/api/v1/products/buy/logs?year=2024&&month=9`, {cache: "no-store"})
+  const res = await fetch(`${baseURL}/api/v1/products/buy/logs?year=${year}&&month=${month}`, {cache: "no-store"})
   console.log(res)
   const payments:Payment[] = await res.json()
 
@@ -114,11 +114,9 @@ export const getPaymentByDate = async (limit: number, year: number, month: numbe
   }
 
   console.log(salesMonth)
-
   console.log(paymentMonth)
-  console.log(payments)
 
-  return payments
+  return paymentMonth
 }
 
 export const getCurrentAsset = async (): Promise<Asset> => {
