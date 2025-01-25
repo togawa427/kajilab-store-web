@@ -1,4 +1,5 @@
-import { Asset, AssetHistory, Payment, Product, User } from "./types/response";
+import { PaymentByProduct, PaymentDay, PaymentMonth, PaymentYear } from "./types/log";
+import { Asset, AssetHistory, Payment, Product, User, PaymentProduct } from "./types/response";
 
 const baseURL = process.env.NEXT_PUBLIC_BASE_URL;
 
@@ -54,6 +55,69 @@ export const getPaymentByUserId = async (userId: number, limit: number, offset: 
   console.log(res)
 
   const payments = await res.json()
+  return payments
+}
+
+export const getPaymentByDate = async (limit: number, year: number, month: number): Promise<Payment[]> => {
+  // const res = await fetch(`${baseURL}/api/v1/products/buy/logs/user/${userId}?limit=${limit}&&offset=${offset}`, {cache: "no-store"})
+  const res = await fetch(`${baseURL}/api/v1/products/buy/logs?year=2024&&month=9`, {cache: "no-store"})
+  console.log(res)
+  const payments:Payment[] = await res.json()
+
+  let paymentMonth: PaymentMonth;
+  let paymentsDay: PaymentDay[] = []
+  let salesMonth = 0
+  payments.map((payment) => {
+    salesMonth += payment.price
+    let paymentDay = paymentsDay.find(tmpPaymentDay => tmpPaymentDay.payDay.getDate() === new Date(payment.pay_at).getDate())
+    console.log(new Date(payment.pay_at).getDate())
+    if(paymentDay) {
+      // 既にその日が存在する場合
+      payment.products.map((product) => {
+        let paymentByProduct = paymentDay.payments.find(tmpPaymentByProduct => tmpPaymentByProduct.name === product.name)
+        if(paymentByProduct) {
+          // 既にその商品が存在する場合
+          paymentByProduct.quantity += product.quantity
+        } else {
+          // その商品がまだ存在しない場合
+          paymentDay.payments.push({
+            name: product.name,
+            quantity: product.quantity,
+            price: product.unit_price
+          })
+        }
+      })
+      paymentDay.sales += payment.price
+      
+    } else {
+      // 新しい日付の場合
+      let tmpProducts: PaymentByProduct[] = []
+      payment.products.map((product) => {
+        tmpProducts.push({
+          name: product.name,
+          quantity: product.quantity,
+          price: product.unit_price * product.quantity
+        })
+      })
+      paymentsDay.push({
+        payDay: new Date(payment.pay_at),
+        sales: payment.price,
+        payments: tmpProducts
+      })
+    }
+  })
+  // console.log(paymentsDay)
+  paymentMonth = {
+    payMonth: new Date(year, month),
+    sales: salesMonth,
+    paymentsDay: paymentsDay
+  }
+
+  console.log(salesMonth)
+
+  console.log(paymentMonth)
+  console.log(payments)
+
   return payments
 }
 
