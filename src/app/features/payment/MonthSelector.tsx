@@ -1,6 +1,5 @@
 import { Button } from '@mantine/core';
 import { IconChevronLeft, IconChevronRight } from '@tabler/icons-react'
-import Link from 'next/link'
 import { useRouter } from 'next/navigation';
 import React from 'react'
 
