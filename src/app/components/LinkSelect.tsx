@@ -19,6 +19,16 @@ function LinkSelect() {
     router.refresh()
   }
 
+  const handleUrlAdminIndex = () => {
+    router.push(`/admin/1`)
+    router.refresh()
+  }
+
+  const handleUrlAdminAsset = () => {
+    router.push(`/admin/asset`)
+    router.refresh()
+  }
+
   return (
     <Menu shadow="md" width={200}>
       <Menu.Target>
@@ -31,6 +41,16 @@ function LinkSelect() {
         </Menu.Item>
         <Menu.Item onClick={handleUrlPaymentMonth} className="text-lg font-semibold">
           月間売上
+        </Menu.Item>
+
+        <Menu.Divider />
+
+        <Menu.Label className="text-lg">↓商店係専用</Menu.Label>
+        <Menu.Item onClick={handleUrlAdminIndex} className="text-lg text-red-800 font-semibold">
+          商品一覧
+        </Menu.Item>
+        <Menu.Item onClick={handleUrlAdminAsset} className="text-lg text-red-800 font-semibold">
+          売上推移グラフ
         </Menu.Item>
       </Menu.Dropdown>
     </Menu>
