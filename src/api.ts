@@ -70,7 +70,6 @@ export const getPaymentMonth = async (year: number, month: number): Promise<Paym
   payments.map((payment) => {
     salesMonth += payment.price
     let paymentDay = paymentsDay.find(tmpPaymentDay => tmpPaymentDay.payDay.getDate() === new Date(payment.pay_at).getDate())
-    console.log(new Date(payment.pay_at).getDate())
     if(paymentDay) {
       // 既にその日が存在する場合
       payment.products.map((product) => {
@@ -112,9 +111,6 @@ export const getPaymentMonth = async (year: number, month: number): Promise<Paym
     sales: salesMonth,
     paymentsDay: paymentsDay
   }
-
-  console.log(salesMonth)
-  console.log(paymentMonth)
 
   return paymentMonth
 }

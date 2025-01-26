@@ -22,7 +22,7 @@ const Base = ({year, month, paymentMonth}: BasePropsType) => {
       <PaymentComponent.MonthSelector year={year} month={month} salesMonth={paymentMonth.sales}/>
 
       {/* 履歴 */}
-      <PaymentComponent.PaymentsList/>
+      <PaymentComponent.PaymentsList paymentsDay={paymentMonth.paymentsDay}/>
       
       
     </div>

@@ -1,33 +1,26 @@
+import { PaymentDay } from '@/types/log'
 import React from 'react'
 
-function PaymentByDay() {
+type PaymentByDayPropsType = {
+  paymentDay: PaymentDay
+}
+
+function PaymentByDay({paymentDay}: PaymentByDayPropsType) {
   return (
-    <>
-      <div className="bg-gray-50 text-xl border-b">
-        <div className="flex px-3 py-1 text-2xl">
-          <div className="font-bold flex-auto">24日(金)</div>
-          <div className="text-blue-800">¥610</div>
-        </div>
+    <div className="bg-gray-50 text-xl mb-3">
+      <div className="flex px-3 py-1 text-2xl border-b">
+        <div className="font-bold flex-auto">{new Date(paymentDay.payDay).getDate()}日({String(new Date(paymentDay.payDay).toLocaleDateString('ja', {weekday: 'short'}))})</div>
+        <div className="text-blue-800">¥ {paymentDay.sales}</div>
       </div>
-      <div className="bg-gray-50 mb-3">
-        <div className="flex px-3 py-1 text-xl">
-          <div className="flex-auto">ポテチ塩 x 2</div>
-          <div>¥ 200</div>
-        </div>
-        <div className="flex px-3 py-1 text-xl">
-          <div className="flex-auto">パックごはん200g x 1</div>
-          <div>¥ 100</div>
-        </div>
-        <div className="flex px-3 py-1 text-xl">
-          <div className="flex-auto">赤いきつね x 2</div>
-          <div>¥ 300</div>
-        </div>
-        <div className="flex px-3 py-1 text-xl">
-          <div className="flex-auto">ハイチュウグレープ x 2</div>
-          <div>¥ 240</div>
-        </div>
+      <div>
+        {paymentDay.payments.map((payment) => (
+          <div className="flex px-3 py-1 text-xl">
+            <div className="flex-auto">{payment.name} x {payment.quantity}</div>
+            <div>¥ {payment.price * payment.quantity}</div>
+          </div>
+        ))}
       </div>
-    </>
+    </div>
   )
 }
 
