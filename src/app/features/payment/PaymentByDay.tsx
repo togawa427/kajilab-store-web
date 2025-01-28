@@ -14,7 +14,7 @@ function PaymentByDay({paymentDay}: PaymentByDayPropsType) {
       </div>
       <div>
         {paymentDay.payments.map((payment) => (
-          <div className="flex px-3 py-1 text-xl">
+          <div key={paymentDay.payDay + payment.name} className="flex px-3 py-1 text-xl">
             <div className="flex-auto">{payment.name} x {payment.quantity}</div>
             <div>¥ {payment.price * payment.quantity}</div>
           </div>

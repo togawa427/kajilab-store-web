@@ -10,7 +10,7 @@ function PaymentsList({paymentsDay}: PaymentListsPropsType) {
   return (
     <div className="mt-5 mb-20">
       {paymentsDay.map((paymentDay) => (
-        <PaymentComponent.PaymentByDay paymentDay={paymentDay}/>
+        <PaymentComponent.PaymentByDay key={String(paymentDay.payDay)} paymentDay={paymentDay}/>
       ))}
     </div>
   )
