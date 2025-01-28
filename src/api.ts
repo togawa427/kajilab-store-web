@@ -60,7 +60,7 @@ export const getPaymentByUserId = async (userId: number, limit: number, offset: 
 
 export const getPaymentMonth = async (year: number, month: number): Promise<PaymentMonth> => {
   // const res = await fetch(`${baseURL}/api/v1/products/buy/logs/user/${userId}?limit=${limit}&&offset=${offset}`, {cache: "no-store"})
-  const res = await fetch(`${baseURL}/api/v1/products/buy/logs?year=${year}&&month=${month}`, {cache: "no-store"})
+  const res = await fetch(`${baseURL}/api/v1/products/buy/logs?year=${year}&&month=${month}`, {next: {revalidate: 3600}})
   console.log(res)
   const payments:Payment[] = await res.json()
 

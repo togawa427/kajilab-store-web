@@ -3,7 +3,7 @@ import Link from 'next/link'
 import React from 'react'
 import LinkSelect from './LinkSelect'
 
-const MainHeader = () => {
+const Header = () => {
   return (
     // <div className="bg-[#4C331F] text-[#F2E8DE] py-2 px-2">
     // <div className="bg-[#55441E] text-white py-2 px-2">
@@ -21,4 +21,4 @@ const MainHeader = () => {
   )
 }
 
-export default MainHeader
+export default Header
