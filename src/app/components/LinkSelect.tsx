@@ -50,7 +50,7 @@ function LinkSelect() {
           商品一覧
         </Menu.Item>
         <Menu.Item onClick={handleUrlAdminAsset} className="text-lg text-red-800 font-semibold">
-          売上推移グラフ
+          資産推移グラフ
         </Menu.Item>
       </Menu.Dropdown>
     </Menu>
