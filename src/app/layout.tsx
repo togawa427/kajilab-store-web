@@ -2,7 +2,7 @@ import '@mantine/core/styles.css';
 import "./globals.css";
 
 import { ColorSchemeScript, MantineProvider } from '@mantine/core';
-import Header from '@/app/components/Header';
+import MainHeader from '@/app/components/MainHeader';
 
 export const metadata = {
   title: '梶研商店',
@@ -23,7 +23,7 @@ export default function RootLayout({
       {/* <body className="bg-[url('https://www.kirby.jp/images/0427/bg-pattern.png')]"> */}
       <body className="bg-[url('/header-bg.jpg')]">
         <MantineProvider>
-          <Header/>
+          <MainHeader/>
           <div className="mx-2 md:mx-10 mt-2 md:mt-5">
            {children}
           </div>
