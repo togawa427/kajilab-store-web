@@ -1,5 +1,5 @@
 import { Product } from '@/types/response';
-import { Card, Group, Image, Text } from '@mantine/core'
+import { Card, Group, Image, Text, useMatches } from '@mantine/core'
 import Link from 'next/link';
 import React from 'react'
 
@@ -8,6 +8,11 @@ type ProductCardAdminProps = {
 }
 
 const ProductCardAdmin = ({product}: ProductCardAdminProps) => {
+
+  const pdSize = useMatches({
+    base: 'xs',
+    md: 'lg',
+  })
 
   const handleClickCard = () => {
     console.log(product.barcode)
@@ -18,10 +23,10 @@ const ProductCardAdmin = ({product}: ProductCardAdminProps) => {
     <Link href={`/admin/product/${product.barcode}`}>
     <Card 
       shadow="sm"
-      padding="lg"
+      padding={pdSize}
       radius="md"
       withBorder
-      className="w-40 md:w-72 bg-slate-50"
+      className="w-40 md:w-72 bg-slate-50 text-xs md:text-base"
       onClick={handleClickCard}
     >
       <Card.Section>
@@ -35,7 +40,7 @@ const ProductCardAdmin = ({product}: ProductCardAdminProps) => {
       </Card.Section>
 
       <Group justify="space-between" mt="xs">
-        <Text fw={700}>{product.name}</Text>
+        <Text fw={700} className='text-xs md:text-base'>{product.name}</Text>
       </Group>
 
       <div>
