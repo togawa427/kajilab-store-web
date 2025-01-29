@@ -32,7 +32,7 @@ function MonthSelector({year, month, salesMonth}: MonthSelectorPropsType) {
   }
 
   return (
-    <div className="text-2xl flex justify-center">
+    <div className="text-lg md:text-2xl flex justify-center">
       <Button variant="transparent" onClick={prevMonth}><IconChevronLeft size={60} color='blue'/></Button>
       <div className='w-1/3 text-center'>
         <div>{year}年{month}月</div>
