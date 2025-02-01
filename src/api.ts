@@ -2,6 +2,7 @@ import { PaymentByProduct, PaymentDay, PaymentMonth, PaymentYear } from "./types
 import { Asset, AssetHistory, Payment, Product, User, PaymentProduct } from "./types/response";
 
 const baseURL = process.env.NEXT_PUBLIC_BASE_URL;
+const jstOffset = (new Date().getTimezoneOffset() + (9 * 60)) * 60 * 1000;
 
 export const getAllProducts = async (): Promise<Product[]> => {
   //const res = await fetch("http://localhost:8080/api/v1/products/buy/logs?limit=5", {cache: "no-store"})  // SSR
@@ -69,7 +70,8 @@ export const getPaymentMonth = async (year: number, month: number): Promise<Paym
   let salesMonth = 0
   payments.map((payment) => {
     salesMonth += payment.price
-    let paymentDay = paymentsDay.find(tmpPaymentDay => tmpPaymentDay.payDay.getDate() === new Date(payment.pay_at).getDate())
+    let jstDate = new Date(new Date(payment.pay_at).getTime() + jstOffset)
+    let paymentDay = paymentsDay.find(tmpPaymentDay => new Date(tmpPaymentDay.payDay).getDate() === jstDate.getDate())
     if(paymentDay) {
       // 既にその日が存在する場合
       payment.products.map((product) => {
