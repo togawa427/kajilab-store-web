@@ -1,7 +1,7 @@
 "use client"
 import { updateProduct } from '@/api';
 import { Product } from '@/types/response';
-import { Button, Card, Group, Image, Overlay, Text } from '@mantine/core'
+import { Button, Card, Group, Image, Overlay, Text, useMatches } from '@mantine/core'
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
@@ -20,6 +20,11 @@ const ProductCardInventory = ({product, displayIsInventory}: ProductCardInventor
   const router = useRouter();
 
   const imgPath = `https://firebasestorage.googleapis.com/v0/b/kajilab-store.appspot.com/o/images%2F${product.barcode}.jpg?alt=media&token=c46357bc-f29c-4d5f-8048-33c1d4a65083`
+
+  const pdSize = useMatches({
+    base: 'xs',
+    md: 'lg',
+  })
 
   const addStock = () => {
     setProductStock(productStock+1)
@@ -81,10 +86,10 @@ const ProductCardInventory = ({product, displayIsInventory}: ProductCardInventor
   return (
     <Card 
       shadow="sm"
-      padding="lg"
+      padding={pdSize}
       radius="md"
       withBorder
-      className={`w-40 md:w-72 bg-slate-50 mx-1 my-1 ${isChecked ? 'text-gray-400' : ''}`}
+      className={`w-40 md:w-72 bg-slate-50 mx-1 my-1 m-1 text-xs md:text-base ${isChecked ? 'text-gray-400' : ''}`}
       
       // onClick={handleClickCard}
     >
@@ -94,32 +99,32 @@ const ProductCardInventory = ({product, displayIsInventory}: ProductCardInventor
           w="auto"
           fit="contain"
           alt="Norway"
-          className="mx-auto h-20 md:h-40"
+          className="mx-auto mt-1 h-20 md:h-40"
         />
         
       </Card.Section>
 
       <Group justify="space-between" mt="xs">
-        <Text fw={700}>{product.name}</Text>
+        <Text fw={700} className='text-xs md:text-base'>{product.name}</Text>
       </Group>
 
       <div>
         <text>
           値段：{product.price}<br/>
           在庫数：<br/>
-          <div className="text-center text-xl mb-1">
-            <Button onClick={subtractStock} size='xs' color='gray' variant="outline" className="mr-1 text-2xl">-</Button>
+          <div className="text-center text-lg md:text-xl mb-1">
+            <Button onClick={subtractStock} size='xs' color='gray' variant="outline" className="mr-1 text-xl">-</Button>
               {productStock}
-            <Button onClick={addStock} size='xs' color='gray' variant="outline" className="ml-1 text-lg">+</Button>
+            <Button onClick={addStock} size='xs' color='gray' variant="outline" className="ml-1 text-xs">+</Button>
           </div>
         </text>
       </div>
       {isChecked ? (
-        <Button fullWidth color='gray' onClick={cancelInventory}>
+        <Button fullWidth color='gray' size='xs' onClick={cancelInventory}>
           キャンセル
         </Button>
       ) : (
-        <Button fullWidth color='#25526C' onClick={confirmInventory}>
+        <Button fullWidth color='#25526C' size='xs' onClick={confirmInventory}>
           確定
         </Button>
       )}

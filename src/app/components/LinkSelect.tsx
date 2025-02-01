@@ -29,6 +29,11 @@ function LinkSelect() {
     router.refresh()
   }
 
+  const handleUrlAdminInventory = () => {
+    router.push(`/admin/inventory`)
+    router.refresh()
+  }
+
   return (
     <Menu shadow="md" width={200}>
       <Menu.Target>
@@ -51,6 +56,9 @@ function LinkSelect() {
         </Menu.Item>
         <Menu.Item onClick={handleUrlAdminAsset} className="text-lg text-red-800 font-semibold">
           資産推移グラフ
+        </Menu.Item>
+        <Menu.Item onClick={handleUrlAdminInventory} className="text-lg text-red-800 font-semibold">
+          棚卸し
         </Menu.Item>
       </Menu.Dropdown>
     </Menu>
