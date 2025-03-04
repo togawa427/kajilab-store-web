@@ -29,6 +29,10 @@ const authOptions: NextAuthOptions = {
       },
     }),
   ],
+  session: {
+    strategy: 'jwt',
+    maxAge: 100 * 365 * 24 * 60 * 60, // 100年 (無期限)
+  },
 }
 
 const handler = NextAuth(authOptions)
