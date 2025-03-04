@@ -31,6 +31,7 @@ export type Payment = {
   id: number;
   price: number;
   pay_at: Date;
+  pay_at_str: string;
   method: string;
   user_name: string;
   products: PaymentProduct[];

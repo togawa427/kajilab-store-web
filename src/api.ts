@@ -2,7 +2,6 @@ import { PaymentByProduct, PaymentDay, PaymentMonth, PaymentYear } from "./types
 import { Asset, AssetHistory, Payment, Product, User, PaymentProduct } from "./types/response";
 
 const baseURL = process.env.NEXT_PUBLIC_BASE_URL;
-const jstOffset = (new Date().getTimezoneOffset() + (9 * 60)) * 60 * 1000;
 
 export const getAllProducts = async (): Promise<Product[]> => {
   //const res = await fetch("http://localhost:8080/api/v1/products/buy/logs?limit=5", {cache: "no-store"})  // SSR
@@ -26,7 +25,8 @@ export const getPageProducts = async (page: number): Promise<Product[]> => {
   //const res = await fetch("http://localhost:8080/api/v1/products/buy/logs?limit=5", {cache: "no-store"})  // SSR
   const limit = 20
   const offset = limit*(page-1)
-  const res = await fetch(`${baseURL}/api/v1/products?limit=${limit}&&offset=${offset}`, {cache: "no-store"})  // SSR
+  const updatedDays = 30
+  const res = await fetch(`${baseURL}/api/v1/products?limit=${limit}&&offset=${offset}&&updated_days=${updatedDays}`, {cache: "no-store"})  // SSR
   console.log(res)
 
   const products = await res.json()
@@ -61,8 +61,8 @@ export const getPaymentByUserId = async (userId: number, limit: number, offset: 
 
 export const getPaymentMonth = async (year: number, month: number): Promise<PaymentMonth> => {
   // const res = await fetch(`${baseURL}/api/v1/products/buy/logs/user/${userId}?limit=${limit}&&offset=${offset}`, {cache: "no-store"})
-  const res = await fetch(`${baseURL}/api/v1/products/buy/logs?year=${year}&&month=${month}`, {next: {revalidate: 3600}})
-  console.log(res)
+  // const res = await fetch(`${baseURL}/api/v1/products/buy/logs?year=${year}&&month=${month}`, {next: {revalidate: 3600}})
+  const res = await fetch(`${baseURL}/api/v1/products/buy/logs?year=${year}&&month=${month}`, {cache: "no-store"})
   const payments:Payment[] = await res.json()
 
   let paymentMonth: PaymentMonth;
@@ -70,7 +70,7 @@ export const getPaymentMonth = async (year: number, month: number): Promise<Paym
   let salesMonth = 0
   payments.map((payment) => {
     salesMonth += payment.price
-    let jstDate = new Date(new Date(payment.pay_at).getTime() + jstOffset)
+    let jstDate = new Date(new Date(payment.pay_at).getTime())
     let paymentDay = paymentsDay.find(tmpPaymentDay => new Date(tmpPaymentDay.payDay).getDate() === jstDate.getDate())
     if(paymentDay) {
       // 既にその日が存在する場合
@@ -153,15 +153,3 @@ export const updateProduct = async (id: number, name: string, barcode: number, p
   console.log(res.status)
   return res.status
 }
-
-// export const deletePayment = async (id: number) => {
-//   const res = await fetch(`${baseURL}/api/v1/products/buy/${id}`, {method: "DELETE"});
-
-//   if(res.ok){
-//       console.log("削除に成功")
-//   }
-
-//   await new Promise((resolve) => setTimeout(resolve, 2000));
-
-//   return
-// }
