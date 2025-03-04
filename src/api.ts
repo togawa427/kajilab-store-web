@@ -3,6 +3,8 @@ import { Asset, AssetHistory, Payment, Product, User, PaymentProduct } from "./t
 
 const baseURL = process.env.NEXT_PUBLIC_BASE_URL;
 
+const jstOffset = (new Date().getTimezoneOffset() + (9 * 60)) * 60 * 1000;
+
 export const getAllProducts = async (): Promise<Product[]> => {
   //const res = await fetch("http://localhost:8080/api/v1/products/buy/logs?limit=5", {cache: "no-store"})  // SSR
   const res = await fetch(`${baseURL}/api/v1/products?limit=1000&&offset=0`, {cache: "no-store"})  // SSR
@@ -70,7 +72,7 @@ export const getPaymentMonth = async (year: number, month: number): Promise<Paym
   let salesMonth = 0
   payments.map((payment) => {
     salesMonth += payment.price
-    let jstDate = new Date(new Date(payment.pay_at).getTime())
+    let jstDate = new Date(new Date(payment.pay_at).getTime() + jstOffset)
     let paymentDay = paymentsDay.find(tmpPaymentDay => new Date(tmpPaymentDay.payDay).getDate() === jstDate.getDate())
     if(paymentDay) {
       // 既にその日が存在する場合
