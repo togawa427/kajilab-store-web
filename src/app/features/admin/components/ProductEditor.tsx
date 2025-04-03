@@ -6,6 +6,7 @@ import { Button, Card, FileButton, FileInput, Group, Image, MultiSelect, Text, T
 import { Form, useForm } from '@mantine/form';
 import axios from 'axios';
 import { getDownloadURL, getStorage, ref, uploadBytes, uploadBytesResumable } from 'firebase/storage';
+import { useRouter } from 'next/navigation';
 import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react'
 
 type ProductEditorProps = {
@@ -16,6 +17,7 @@ const ProductEditor = ({product}: ProductEditorProps) => {
   const [loading, setLoading] = useState(false)
   const [isUploaded, setUploaded] = useState(false)
   const [imgUrl] = useFirebaseStorageURL(product)
+  const router = useRouter();
 
   const onFileUploadToFirebase = (e: ChangeEvent<HTMLInputElement>) => {
     if(e.target.files){
@@ -36,6 +38,8 @@ const ProductEditor = ({product}: ProductEditorProps) => {
           // 終了したら
           setLoading(false)
           setUploaded(true)
+          router.push("/admin/1")
+          router.refresh()
         }
       )
     }
