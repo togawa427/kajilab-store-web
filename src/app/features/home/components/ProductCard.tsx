@@ -27,6 +27,7 @@ const ProductCard = ({product}: ProductCardListProps) => {
           fit="contain"
           alt="Norway"
           className="mx-auto mt-1 h-20 md:h-40"
+          onError={(e) => (e.currentTarget.src = "/images/gettingreadyproductimg.jpg")}
         />
       </Card.Section>
 

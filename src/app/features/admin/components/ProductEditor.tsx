@@ -2,7 +2,7 @@
 import { useFirebaseStorageURL } from '@/app/hooks/useFirebaseStorageURL';
 import storage from '@/firebase';
 import { Product } from '@/types/response';
-import { Button, Card, FileButton, FileInput, Group, Image, Text, TextInput } from '@mantine/core';
+import { Button, Card, FileButton, FileInput, Group, Image, MultiSelect, Text, TextInput } from '@mantine/core';
 import { Form, useForm } from '@mantine/form';
 import axios from 'axios';
 import { getDownloadURL, getStorage, ref, uploadBytes, uploadBytesResumable } from 'firebase/storage';
@@ -95,8 +95,14 @@ const ProductEditor = ({product}: ProductEditorProps) => {
                 在庫数：{product.stock}
               </text>
             </div>
-
+            <div className='mt-5'>商品画像</div>
             <input type="file" accept='.jpg' onChange={onFileUploadToFirebase} />
+
+            <div className='mt-5'>タグ</div>
+            {/* <MultiSelect
+              placeholder="タグを選んでください"
+              data={['お菓子', 'ドリンク']}
+            /> */}
           </Card>
           </div>
         )}

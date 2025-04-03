@@ -5,13 +5,15 @@ import * as HomeCompont from "@/app/features/home/components/Index"
 import { getPageProducts } from '@/api'
 import { Product } from '@/types/response'
 import Link from 'next/link'
+import Loading from '@/app/components/Loading'
 
 type BasePropsType = {
   page: number;
 }
 
 const Base = ({page}: BasePropsType) => {
-  const [products, setProducts] = useState<Product[]>([])
+  const [products, setProducts] = useState<Product[] | null>(null)
+  const [isError, setIsError] = useState<boolean>(false)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -20,10 +22,14 @@ const Base = ({page}: BasePropsType) => {
         setProducts(data);
       } catch (error) {
         console.error('Error fetching products:', error);
+        setIsError(true)
       }
     };
     fetchData();
   }, [page]);
+
+  if(products == null)  return(<Loading message='商品情報取得中'/>)
+  if(isError) return(<div>読み込み失敗</div>)
 
   return (
     <div className="mb-10">
