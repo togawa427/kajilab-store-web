@@ -9,7 +9,7 @@ export default async function AdminProductPage({
   const currentAsset = await getCurrentAsset()
   return (
     <div>
-      <Admin.Base page={params.page} currentAsset={currentAsset}/>
+      <Admin.Base currentAsset={currentAsset}/>
     </div>
   )
 }
