@@ -1,3 +1,7 @@
+export type ProductTag = {
+  name: string;
+}
+
 export type Product = {
   id: number;
   name: string;
@@ -6,6 +10,12 @@ export type Product = {
   stock: number;
   tag_id: number;
   image_path: string;
+  tags: ProductTag[]
+}
+
+export type Products = {
+  products: Product[];
+  total_count: number;
 }
 
 export type User = {

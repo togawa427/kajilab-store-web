@@ -3,8 +3,9 @@ import { Badge, Button, Card, Group, Image, Text } from '@mantine/core'
 import React, { useEffect, useState } from 'react'
 import * as Admin from "@/app/features/admin/components/Index"
 import { getPageProducts, getProducts } from '@/api'
-import { Asset, Product } from '@/types/response'
+import { Asset, Product, Products } from '@/types/response'
 import Link from 'next/link'
+import Loading from '@/app/components/Loading'
 
 type BasePropsType = {
   page: number;
@@ -12,20 +13,24 @@ type BasePropsType = {
 }
 
 const Base = ({page, currentAsset}: BasePropsType) => {
-  const [products, setProducts] = useState<Product[]>([])
+  const [resProducts, setResProducts] = useState<Products>()
+  const [isError, setIsError] = useState<boolean>(false)
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const data = await getPageProducts(page)
-        setProducts(data);
+        setResProducts(data);
       } catch (error) {
         console.error('Error fetching products:', error);
+        setIsError(true)
       }
     };
     fetchData();
   }, [page]);
 
+  if(resProducts == null)  return(<Loading message='商品情報取得中'/>)
+  if(isError) return(<div>読み込み失敗</div>)
   return (
     <>
       <Link href={`/admin/asset`} className="text-end">
@@ -43,7 +48,7 @@ const Base = ({page, currentAsset}: BasePropsType) => {
             </Button>
           </Link>
         )}
-        {products.length == 20 && (
+        {resProducts.products.length == 20 && (
           <Link href={`/admin/${(Number(page)+Number(1))}`} className="ml-10">
             <Button color='#25526C' variant='outline'>
               次へ
@@ -52,7 +57,7 @@ const Base = ({page, currentAsset}: BasePropsType) => {
         )}
       </div>
       <div className="flex flex-wrap justify-center">
-        {products.map((product) => (
+        {resProducts.products.map((product) => (
           <div key={product.id} className="mx-1 my-1">
             <Admin.ProductCardAdmin
               product={product}
@@ -68,7 +73,7 @@ const Base = ({page, currentAsset}: BasePropsType) => {
             </Button>
           </Link>
         )}
-        {products.length == 20 && (
+        {resProducts.products.length == 20 && (
           <Link href={`/admin/${(Number(page)+Number(1))}`} className="ml-10">
             <Button color='#25526C' variant='outline'>
               次へ

@@ -3,7 +3,7 @@ import { Badge, Button, Card, Group, Image, Text } from '@mantine/core'
 import React, { useEffect, useState } from 'react'
 import * as HomeCompont from "@/app/features/home/components/Index"
 import { getPageProducts } from '@/api'
-import { Product } from '@/types/response'
+import { Product, Products } from '@/types/response'
 import Link from 'next/link'
 import Loading from '@/app/components/Loading'
 
@@ -12,14 +12,14 @@ type BasePropsType = {
 }
 
 const Base = ({page}: BasePropsType) => {
-  const [products, setProducts] = useState<Product[] | null>(null)
+  const [resProducts, setResProducts] = useState<Products | null>(null)
   const [isError, setIsError] = useState<boolean>(false)
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const data = await getPageProducts(page)
-        setProducts(data);
+        setResProducts(data);
       } catch (error) {
         console.error('Error fetching products:', error);
         setIsError(true)
@@ -28,7 +28,7 @@ const Base = ({page}: BasePropsType) => {
     fetchData();
   }, [page]);
 
-  if(products == null)  return(<Loading message='商品情報取得中'/>)
+  if(resProducts == null)  return(<Loading message='商品情報取得中'/>)
   if(isError) return(<div>読み込み失敗</div>)
 
   return (
@@ -41,7 +41,7 @@ const Base = ({page}: BasePropsType) => {
             </Button>
           </Link>
         )}
-        {products.length == 20 && (
+        {resProducts.products.length == 20 && (
           <Link href={`/${(Number(page)+Number(1))}`} className="ml-10">
             <Button color='#25526C' variant='outline'>
               次へ
@@ -50,7 +50,7 @@ const Base = ({page}: BasePropsType) => {
         )}
       </div>
       <div className="flex flex-wrap justify-center">
-        {products.map((product) => (
+        {resProducts.products.map((product) => (
           <div key={product.id} className="mx-1 my-1">
             <HomeCompont.ProductCard
               product={product}
@@ -66,7 +66,7 @@ const Base = ({page}: BasePropsType) => {
             </Button>
           </Link>
         )}
-        {products.length == 20 && (
+        {resProducts.products.length == 20 && (
           <Link href={`/${(Number(page)+Number(1))}`} className="ml-10">
             <Button color='#25526C' variant='outline'>
               次へ

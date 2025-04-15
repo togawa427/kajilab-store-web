@@ -2,6 +2,7 @@ import { NavLink } from '@mantine/core'
 import Link from 'next/link'
 import React from 'react'
 import LinkSelect from './LinkSelect'
+import Image from 'next/image'
 
 const Header = () => {
   return (
@@ -10,6 +11,7 @@ const Header = () => {
     // <div className="bg-[url('https://www.kirby.jp/images/0427/bg-deeppink-stripe.png')] text-white py-2 px-2">
     <div className="bg-[url('/header-bgblue.jpg')] text-white py-2 px-2 flex">
       <Link href={"/"} className="flex-auto">
+        {/* <Image src='/images/syouten-logo.png' width={48} height={47} alt='logo' className='pl-28'/> */}
         <div className="text-2xl">
           梶研商店
         </div>
