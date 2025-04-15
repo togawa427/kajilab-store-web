@@ -1,25 +1,44 @@
 "use client"
-import { Badge, Button, Card, Group, Image, Text } from '@mantine/core'
+import { Badge, Button, Card, Group, Image, Pagination, Text } from '@mantine/core'
 import React, { useEffect, useState } from 'react'
 import * as Admin from "@/app/features/admin/components/Index"
 import { getPageProducts, getProducts } from '@/api'
 import { Asset, Product, Products } from '@/types/response'
 import Link from 'next/link'
 import Loading from '@/app/components/Loading'
+import { useRouter, useSearchParams } from 'next/navigation'
 
 type BasePropsType = {
-  page: number;
   currentAsset: Asset;
 }
 
-const Base = ({page, currentAsset}: BasePropsType) => {
+const Base = ({currentAsset}: BasePropsType) => {
   const [resProducts, setResProducts] = useState<Products>()
   const [isError, setIsError] = useState<boolean>(false)
+  const [currentPage, setCurrentPage] = useState<number>();
+  const searchParams = useSearchParams();
+  const paramPage = searchParams.get("page");
+  const router = useRouter()
+
+  // ページが変わったタイミング
+    useEffect(() => {
+      const tmpParams = new URLSearchParams()
+      if(currentPage){
+        tmpParams.set("page", String(currentPage))
+      }
+      router.push(`/?${tmpParams.toString()}`)
+      router.refresh()
+    }, [currentPage, router])
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await getPageProducts(page)
+        let data
+        if(paramPage){
+          data = await getPageProducts(parseInt(paramPage))
+        } else {
+          data = await getPageProducts(1)
+        }
         setResProducts(data);
       } catch (error) {
         console.error('Error fetching products:', error);
@@ -27,7 +46,7 @@ const Base = ({page, currentAsset}: BasePropsType) => {
       }
     };
     fetchData();
-  }, [page]);
+  }, [paramPage]);
 
   if(resProducts == null)  return(<Loading message='商品情報取得中'/>)
   if(isError) return(<div>読み込み失敗</div>)
@@ -40,21 +59,8 @@ const Base = ({page, currentAsset}: BasePropsType) => {
         </div>
       </Link>
     
-      <div className="text-center">
-        {page > 1 && (
-          <Link href={`/admin/${(page-1)}`} className="mr-10">
-            <Button color='#25526C' variant='outline'>
-              前へ
-            </Button>
-          </Link>
-        )}
-        {resProducts.products.length == 20 && (
-          <Link href={`/admin/${(Number(page)+Number(1))}`} className="ml-10">
-            <Button color='#25526C' variant='outline'>
-              次へ
-            </Button>
-          </Link>
-        )}
+      <div className="flex justify-center">
+        <Pagination value={currentPage} onChange={setCurrentPage} total={(resProducts.total_count/20)+1} />
       </div>
       <div className="flex flex-wrap justify-center">
         {resProducts.products.map((product) => (
@@ -65,21 +71,8 @@ const Base = ({page, currentAsset}: BasePropsType) => {
           </div>
         ))}
       </div>
-      <div className="text-center">
-        {page > 1 && (
-          <Link href={`/admin/${(page-1)}`} className="mr-10">
-            <Button color='#25526C' variant='outline'>
-              前へ
-            </Button>
-          </Link>
-        )}
-        {resProducts.products.length == 20 && (
-          <Link href={`/admin/${(Number(page)+Number(1))}`} className="ml-10">
-            <Button color='#25526C' variant='outline'>
-              次へ
-            </Button>
-          </Link>
-        )}
+      <div className="flex justify-center">
+        <Pagination value={currentPage} onChange={setCurrentPage} total={(resProducts.total_count/20)+1} />
       </div>
     </>
   )

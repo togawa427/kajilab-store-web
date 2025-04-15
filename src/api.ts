@@ -9,21 +9,17 @@ export const getAllProducts = async (): Promise<Product[]> => {
   //const res = await fetch("http://localhost:8080/api/v1/products/buy/logs?limit=5", {cache: "no-store"})  // SSR
   const res = await fetch(`${baseURL}/api/v1/products?limit=1000&&offset=0`, {cache: "no-store"})  // SSR
   console.log(res)
-  console.log("商品レスポンス：" + res)
 
   const products = await res.json()
-  console.log("商品レスポンスJson：" + products)
   return products
 }
 
 export const getProducts = async (): Promise<Products> => {
   //const res = await fetch("http://localhost:8080/api/v1/products/buy/logs?limit=5", {cache: "no-store"})  // SSR
   const res = await fetch(`${baseURL}/api/v1/products?limit=20&&offset=0`, {cache: "no-store"})  // SSR
-  console.log("aiueo")
   console.log(res)
 
   const products = await res.json()
-  console.log("商品レスポンスJson：" + products)
   return products
 }
 
@@ -36,8 +32,6 @@ export const getPageProducts = async (page: number): Promise<Products> => {
   console.log(res)
 
   const products = await res.json()
-  console.log("JSONは：")
-  console.log(products)
   return products
 }
 
