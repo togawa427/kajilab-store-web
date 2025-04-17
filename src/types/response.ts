@@ -1,3 +1,5 @@
+import { SalesDay } from "./log";
+
 export type ProductTag = {
   name: string;
 }
@@ -53,4 +55,12 @@ export type PaymentProduct = {
   barcode: number;
   quantity: number;
   unit_price: number;
+}
+
+export type SalesMonth = {
+  year: number;
+  month: number;
+  total_month_sale: number;
+  response_date: string;
+  sales: SalesDay[];
 }

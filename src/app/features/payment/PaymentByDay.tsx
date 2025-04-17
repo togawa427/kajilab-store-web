@@ -1,24 +1,28 @@
-import { PaymentDay } from '@/types/log'
+import { SalesPerProduct } from '@/types/log'
 import React from 'react'
 
 type PaymentByDayPropsType = {
-  paymentDay: PaymentDay
+  salesPerProducts: SalesPerProduct[]
+  totalSales: number
+  day: number
+  month: number
+  year: number
 }
 
-function PaymentByDay({paymentDay}: PaymentByDayPropsType) {
-  const jpDate = new Date(paymentDay.payDay.getTime())
+function PaymentByDay({salesPerProducts, totalSales, day, month, year}: PaymentByDayPropsType) {
+  const date = new Date(year, month, day)
 
   return (
     <div className="bg-gray-50 mb-3">
       <div className="flex px-3 py-1 text-lg md:text-2xl border-b">
-        <div className="font-bold flex-auto">{jpDate.getDate()}日({jpDate.toLocaleDateString('ja', {weekday: 'short', timeZone: 'Asia/Tokyo'})})</div>
-        <div className="text-blue-800">¥ {paymentDay.sales}</div>
+        <div className="font-bold flex-auto">{date.getDate()}日({date.toLocaleDateString('ja', {weekday: 'short', timeZone: 'Asia/Tokyo'})})</div>
+        <div className="text-blue-800">¥ {totalSales}</div>
       </div>
       <div>
-        {paymentDay.payments.map((payment) => (
-          <div key={jpDate + payment.name} className="flex px-3 py-1 text-sm md:text-xl">
-            <div className="flex-auto">{payment.name} x {payment.quantity}</div>
-            <div>¥ {payment.price * payment.quantity}</div>
+        {salesPerProducts.map((salesPerProduct) => (
+          <div key={date + salesPerProduct.name} className="flex px-3 py-1 text-sm md:text-xl">
+            <div className="flex-auto">{salesPerProduct.name} x {salesPerProduct.quantity}</div>
+            <div>¥ {salesPerProduct.unit_price * salesPerProduct.quantity}</div>
           </div>
         ))}
       </div>

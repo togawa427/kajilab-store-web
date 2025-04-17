@@ -1,5 +1,5 @@
 import { PaymentByProduct, PaymentDay, PaymentMonth, PaymentYear } from "./types/log";
-import { Asset, AssetHistory, Payment, Product, User, PaymentProduct, Products } from "./types/response";
+import { Asset, AssetHistory, Payment, Product, User, PaymentProduct, Products, SalesMonth } from "./types/response";
 
 const baseURL = process.env.NEXT_PUBLIC_BASE_URL;
 
@@ -61,62 +61,11 @@ export const getPaymentByUserId = async (userId: number, limit: number, offset: 
   return payments
 }
 
-export const getPaymentMonth = async (year: number, month: number): Promise<PaymentMonth> => {
-  // const res = await fetch(`${baseURL}/api/v1/products/buy/logs/user/${userId}?limit=${limit}&&offset=${offset}`, {cache: "no-store"})
-  const res = await fetch(`${baseURL}/api/v1/products/buy/logs?year=${year}&&month=${month}`, {next: {revalidate: 3600}})
-  // const res = await fetch(`${baseURL}/api/v1/products/buy/logs?year=${year}&&month=${month}`, {cache: "no-store"})
-  const payments:Payment[] = await res.json()
-
-  let paymentMonth: PaymentMonth;
-  let paymentsDay: PaymentDay[] = []
-  let salesMonth = 0
-  payments.map((payment) => {
-    salesMonth += payment.price
-    let jstDate = new Date(new Date(payment.pay_at).getTime() + jstOffset)
-    let paymentDay = paymentsDay.find(tmpPaymentDay => new Date(tmpPaymentDay.payDay).getDate() === jstDate.getDate())
-    if(paymentDay) {
-      // 既にその日が存在する場合
-      payment.products.map((product) => {
-        let paymentByProduct = paymentDay.payments.find(tmpPaymentByProduct => tmpPaymentByProduct.name === product.name)
-        if(paymentByProduct) {
-          // 既にその商品が存在する場合
-          paymentByProduct.quantity += product.quantity
-        } else {
-          // その商品がまだ存在しない場合
-          paymentDay.payments.push({
-            name: product.name,
-            quantity: product.quantity,
-            price: product.unit_price
-          })
-        }
-      })
-      paymentDay.sales += payment.price
-      
-    } else {
-      // 新しい日付の場合
-      let tmpProducts: PaymentByProduct[] = []
-      payment.products.map((product) => {
-        tmpProducts.push({
-          name: product.name,
-          quantity: product.quantity,
-          price: product.unit_price * product.quantity
-        })
-      })
-      paymentsDay.push({
-        payDay: new Date(payment.pay_at),
-        sales: payment.price,
-        payments: tmpProducts
-      })
-    }
-  })
-  // console.log(paymentsDay)
-  paymentMonth = {
-    payMonth: new Date(year, month),
-    sales: salesMonth,
-    paymentsDay: paymentsDay
-  }
-
-  return paymentMonth
+export const getSalesMonth = async (year: number, month: number): Promise<SalesMonth> => {
+  const res = await fetch(`${baseURL}/api/v1/sales?year=${year}&&month=${month}`, {next: {revalidate: 3600}})
+  const salesMonth:SalesMonth = await res.json()
+  // console.log(salesMonth)
+  return salesMonth
 }
 
 export const getCurrentAsset = async (): Promise<Asset> => {

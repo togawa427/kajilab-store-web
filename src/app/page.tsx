@@ -1,3 +1,4 @@
+import { getSalesMonth } from "@/api"
 import * as HomeCompont from "@/app/features/home/components/Index"
 
 export default function Home() {

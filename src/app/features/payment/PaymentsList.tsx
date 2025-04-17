@@ -1,16 +1,25 @@
 import React from 'react'
 import * as PaymentComponent from "@/app/features/payment/Index"
-import { PaymentDay, PaymentMonth } from '@/types/log'
+import { PaymentDay, PaymentMonth, SalesDay } from '@/types/log'
 
 type PaymentListsPropsType = {
-  paymentsDay: PaymentDay[];
+  salesDays: SalesDay[];
+  month: number;
+  year: number;
 }
 
-function PaymentsList({paymentsDay}: PaymentListsPropsType) {
+function PaymentsList({salesDays, month, year}: PaymentListsPropsType) {
   return (
     <div className="mt-5 mb-20">
-      {paymentsDay.map((paymentDay) => (
-        <PaymentComponent.PaymentByDay key={String(paymentDay.payDay)} paymentDay={paymentDay}/>
+      {salesDays.map((salesDay) => (
+        <PaymentComponent.PaymentByDay
+          key={String(salesDay.day)}
+          salesPerProducts={salesDay.Payments}
+          totalSales={salesDay.total_sale}
+          day={salesDay.day}
+          month={month}
+          year={year}
+        />
       ))}
     </div>
   )
