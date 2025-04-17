@@ -15,7 +15,6 @@ type BasePropsType = {
 }
 
 const Base = ({year, month, salesMonth}: BasePropsType) => {
-
   return (
     <div className="max-w-3xl mx-auto">
       {/* 年月日 */}

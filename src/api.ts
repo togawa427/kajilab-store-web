@@ -63,7 +63,6 @@ export const getPaymentByUserId = async (userId: number, limit: number, offset: 
 export const getSalesMonth = async (year: number, month: number): Promise<SalesMonth> => {
   const res = await fetch(`${baseURL}/api/v1/sales?year=${year}&&month=${month}`, {next: {revalidate: 3600}})
   const salesMonth:SalesMonth = await res.json()
-  // console.log(salesMonth)
   return salesMonth
 }
 

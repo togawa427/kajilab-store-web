@@ -10,7 +10,7 @@ type PaymentByDayPropsType = {
 }
 
 function PaymentByDay({salesPerProducts, totalSales, day, month, year}: PaymentByDayPropsType) {
-  const date = new Date(year, month, day)
+  const date = new Date(year, month-1, day)
 
   return (
     <div className="bg-gray-50 mb-3">
