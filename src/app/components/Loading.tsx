@@ -6,6 +6,7 @@ type LoadingProps = {
 };
 
 const Loading = ({ message }: LoadingProps) => {
+  console.log("loading")
   return (
     <LoadingOverlay
       visible
