@@ -1,4 +1,3 @@
-import { PaymentByProduct, PaymentDay, PaymentMonth, PaymentYear } from "./types/log";
 import { Asset, AssetHistory, Payment, Product, User, PaymentProduct, Products, SalesMonth } from "./types/response";
 
 const baseURL = process.env.NEXT_PUBLIC_BASE_URL;

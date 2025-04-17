@@ -1,6 +1,6 @@
 import React from 'react'
 import * as PaymentComponent from "@/app/features/payment/Index"
-import { PaymentDay, PaymentMonth, SalesDay } from '@/types/log'
+import { SalesDay } from '@/types/log'
 
 type PaymentListsPropsType = {
   salesDays: SalesDay[];

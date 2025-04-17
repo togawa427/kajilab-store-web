@@ -5,7 +5,6 @@ import Link from 'next/link';
 import * as PaymentComponent from "@/app/features/payment/Index"
 import { Button } from '@mantine/core';
 import { useRouter } from 'next/navigation';
-import { PaymentMonth } from '@/types/log';
 import { SalesMonth } from '@/types/response';
 
 
