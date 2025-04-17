@@ -26,7 +26,7 @@ const Base = ({currentAsset}: BasePropsType) => {
       if(currentPage){
         tmpParams.set("page", String(currentPage))
       }
-      router.push(`/?${tmpParams.toString()}`)
+      router.push(`/admin?${tmpParams.toString()}`)
       router.refresh()
     }, [currentPage, router])
 
