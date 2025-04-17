@@ -17,6 +17,7 @@
     "@tabler/icons-react": "^3.29.0",
     "@types/formidable": "^3.4.5",
     "axios": "^1.6.8",
+    "dayjs": "^1.11.13",
     "express": "^4.19.2",
     "firebase": "^10.10.0",
     "formidable": "^3.5.1",
