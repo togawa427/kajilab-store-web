@@ -6,6 +6,7 @@ import * as PaymentComponent from "@/app/features/payment/Index"
 import { Button } from '@mantine/core';
 import { useRouter } from 'next/navigation';
 import { SalesMonth } from '@/types/response';
+import dayjs from "dayjs"
 
 
 type BasePropsType = {
@@ -25,8 +26,8 @@ const Base = ({year, month, salesMonth}: BasePropsType) => {
         salesDays={salesMonth.sales}
         month={salesMonth.month}
         year={salesMonth.year}
+        responseDate={dayjs(salesMonth.response_date, 'YYYY-MM-DD HH:mm:ss').toDate()}
       />
-      
       
     </div>
   )
