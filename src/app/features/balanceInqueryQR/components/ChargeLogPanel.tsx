@@ -15,7 +15,7 @@ export default function ChargeLogPanel({log, products}: ChargeLogPanelPropsType)
             {log.content}
           </div>
           <div className="ml-auto">
-            {0-log.price}円
+            +{0-log.price}円
             ({log.current_debt}円)
           </div>
         </div>
