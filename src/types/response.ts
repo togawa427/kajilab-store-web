@@ -39,13 +39,16 @@ export type AssetHistory = {
   product: number
 }
 
-export type Payment = {
+export type KajilabpayLog = {
   id: number;
   price: number;
   pay_at: Date;
   pay_at_str: string;
   method: string;
   user_name: string;
+  content: string;
+  prev_debt: number;
+  current_debt: number;
   products: PaymentProduct[];
 }
 

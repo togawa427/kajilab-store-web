@@ -1,5 +1,7 @@
 import Base from "./Base";
 import PaymentsTable from "./PaymentsTable";
-import PaymentPanel from "./PaymentPanel";
+import PaymentLogPanel from "./PaymentLogPanel";
+import ChargeLogPanel from "./ChargeLogPanel";
+import LogPanel from "./LogPanel";
 
-export { Base, PaymentsTable, PaymentPanel };
+export { Base, PaymentsTable, PaymentLogPanel, ChargeLogPanel, LogPanel };

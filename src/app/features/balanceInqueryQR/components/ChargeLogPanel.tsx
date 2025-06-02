@@ -1,21 +1,22 @@
-"use client"
-import { Payment, PaymentProduct } from '@/types/response';
+import { KajilabpayLog, PaymentProduct } from '@/types/response';
 import React from 'react'
 
-type PaymentPanelPropsType = {
-  payment: Payment;
+type ChargeLogPanelPropsType = {
+  log: KajilabpayLog;
   products: PaymentProduct[];
 }
 
-function PaymentPanel({payment, products}: PaymentPanelPropsType) {
+export default function ChargeLogPanel({log, products}: ChargeLogPanelPropsType) {
   return (
     <div className="border-b border-gray-400">
-        <div className="flex bg-gray-200" key={payment.id}>
+        <div className="flex bg-blue-100" key={log.id}>
           <div>
-            {new Date(payment.pay_at).getFullYear()}/{new Date(payment.pay_at).getMonth()+1}/{new Date(payment.pay_at).getDate()}
+            {new Date(log.pay_at).getFullYear()}/{new Date(log.pay_at).getMonth()+1}/{new Date(log.pay_at).getDate()}　
+            {log.content}
           </div>
           <div className="ml-auto">
-            {payment.price}円
+            {0-log.price}円
+            ({log.current_debt}円)
           </div>
         </div>
         <div className="bg-gray-white">
@@ -36,5 +37,3 @@ function PaymentPanel({payment, products}: PaymentPanelPropsType) {
     </div>
   )
 }
-
-export default PaymentPanel
