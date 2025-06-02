@@ -37,7 +37,7 @@ const Base = ({user}: BasePropsType) => {
         <div className="text-2xl">利用明細</div>
         <div className="ml-auto">（最新20件）</div>
       </div>
-      <BalanceInqueryQR.PaymentsTable kajilabpayLogs={kajilabpayLog}/>
+      <BalanceInqueryQR.KajilabpayLogsTable kajilabpayLogs={kajilabpayLog}/>
 
     </div>
   )

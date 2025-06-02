@@ -1,7 +1,7 @@
 import Base from "./Base";
-import PaymentsTable from "./PaymentsTable";
+import KajilabpayLogsTable from "./KajilabpayLogsTable";
 import PaymentLogPanel from "./PaymentLogPanel";
 import ChargeLogPanel from "./ChargeLogPanel";
 import LogPanel from "./LogPanel";
 
-export { Base, PaymentsTable, PaymentLogPanel, ChargeLogPanel, LogPanel };
+export { Base, KajilabpayLogsTable, PaymentLogPanel, ChargeLogPanel, LogPanel };

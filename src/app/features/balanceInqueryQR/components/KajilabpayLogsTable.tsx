@@ -3,11 +3,11 @@ import { KajilabpayLog} from '@/types/response';
 import * as BalanceInqueryQR from "@/app/features/balanceInqueryQR/components/Index"
 import React from 'react'
 
-type PaymentsTablePropsType = {
+type KajilabpayLogsTablePropsType = {
   kajilabpayLogs: KajilabpayLog[];
 }
 
-function PaymentsTable({kajilabpayLogs}: PaymentsTablePropsType) {
+function KajilabpayLogsTable({kajilabpayLogs}: KajilabpayLogsTablePropsType) {
   return (
     <div className="border border-gray-500 bg-white mt-3">
       {kajilabpayLogs.map((kajilabpayLog) => (
@@ -17,4 +17,4 @@ function PaymentsTable({kajilabpayLogs}: PaymentsTablePropsType) {
   )
 }
 
-export default PaymentsTable
+export default KajilabpayLogsTable
