@@ -6,3 +6,7 @@ type UpdateProductType = {
   stock: number;
   tag_id: number;
 }
+
+type PutAssetType = {
+  money: number;
+}

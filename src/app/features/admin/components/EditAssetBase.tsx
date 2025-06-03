@@ -1,4 +1,5 @@
 'use client'
+import { putAsset } from '@/api';
 import { Button, NumberInput } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import React, { useState } from 'react'
@@ -43,7 +44,9 @@ function EditAssetBase({currentMoney, currentDebt}: EditAssetBaseProps) {
 
       <div className="max-w-3xl mx-auto mt-3 px-3 py-2 bg-white rounded-sm shadow">
         <div className='text-xl font-bold'>変更後の資産</div>
-        <form onSubmit={form.onSubmit((values) => console.log(values))}>
+        <form onSubmit={form.onSubmit((values) => 
+          putAsset(values.money)
+        )}>
           <div className='flex w-full items-center justify-center'>
             <p className='text-xl'>現金：</p>
             <NumberInput

@@ -81,6 +81,22 @@ export const getAssetHistory = async (day: number): Promise<AssetHistory[]> => {
   return assetHistory
 }
 
+export const putAsset = async (money: number): Promise<number> => {
+  let requestAsset: PutAssetType = {
+    money: money
+  }
+  const res = await fetch(`${baseURL}/api/v1/assets`, {
+    method: "PUT",
+    headers: {
+        "Content-Type": "application/json",
+    },
+    body: JSON.stringify(requestAsset)
+  })
+
+  console.log(res.status)
+  return res.status
+}
+
 export const updateProduct = async (id: number, name: string, barcode: number, price: number, stock: number, tagId: number): Promise<number> => {
   let requestProduct: UpdateProductType = {
       id: id,
