@@ -35,7 +35,7 @@ const ProductCardAdmin = ({product}: ProductCardAdminProps) => {
           w="auto"
           fit="contain"
           alt="Norway"
-          className="mx-auto h-20 md:h-40"
+          className="mx-auto mt-1 h-20 md:h-40"
         />
       </Card.Section>
 

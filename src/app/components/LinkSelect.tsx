@@ -20,7 +20,7 @@ function LinkSelect() {
   }
 
   const handleUrlAdminIndex = () => {
-    router.push(`/admin`)
+    router.push(`/admin/products`)
     router.refresh()
   }
 

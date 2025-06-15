@@ -25,8 +25,9 @@ const Base = ({currentAsset}: BasePropsType) => {
       const tmpParams = new URLSearchParams()
       if(currentPage){
         tmpParams.set("page", String(currentPage))
+        console.log(tmpParams)
       }
-      router.push(`/admin?${tmpParams.toString()}`)
+      router.push(`/admin/products?${tmpParams.toString()}`)
       router.refresh()
     }, [currentPage, router])
 
