@@ -9,7 +9,7 @@ type PaymentLogPanelPropsType = {
 export default function PaymentLogPanel({log, products}: PaymentLogPanelPropsType) {
   return (
     <div className="border-b border-gray-400">
-        <div className="flex bg-red-100" key={log.id}>
+        <div className="flex bg-gray-200" key={log.id}>
           <div>
             {new Date(log.pay_at).getFullYear()}/{new Date(log.pay_at).getMonth()+1}/{new Date(log.pay_at).getDate()}　
             {log.content}

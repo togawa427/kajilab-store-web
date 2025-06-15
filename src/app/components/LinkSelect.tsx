@@ -29,6 +29,11 @@ function LinkSelect() {
     router.refresh()
   }
 
+  const handleUrlAdminEditAsset = () => {
+    router.push(`/admin/edit_asset`)
+    router.refresh()
+  }
+
   const handleUrlAdminInventory = () => {
     router.push(`/admin/inventory`)
     router.refresh()
@@ -56,6 +61,9 @@ function LinkSelect() {
         </Menu.Item>
         <Menu.Item onClick={handleUrlAdminAsset} className="text-lg text-red-800 font-semibold">
           資産推移グラフ
+        </Menu.Item>
+        <Menu.Item onClick={handleUrlAdminEditAsset} className="text-lg text-red-800 font-semibold">
+          残高修正
         </Menu.Item>
         <Menu.Item onClick={handleUrlAdminInventory} className="text-lg text-red-800 font-semibold">
           棚卸し
