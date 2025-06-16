@@ -8,6 +8,9 @@ import axios from 'axios';
 import { getDownloadURL, getStorage, ref, uploadBytes, uploadBytesResumable } from 'firebase/storage';
 import { useRouter } from 'next/navigation';
 import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react'
+import { Dropzone, DropzoneProps, FileWithPath, IMAGE_MIME_TYPE } from '@mantine/dropzone';
+import { IconPhoto, IconUpload, IconX } from '@tabler/icons-react';
+import { resizeImageToHeight } from '../utils';
 
 type ProductEditorProps = {
   product: Product;
@@ -18,12 +21,16 @@ const ProductEditor = ({product}: ProductEditorProps) => {
   const [isUploaded, setUploaded] = useState(false)
   const [imgUrl] = useFirebaseStorageURL(product)
   const router = useRouter();
+  const [uploadFile, setUploadFile] = useState<FileWithPath>()
+  const [isUpload, setIsUpload] = useState(false)
 
-  const onFileUploadToFirebase = (e: ChangeEvent<HTMLInputElement>) => {
-    if(e.target.files){
-      const file = e.target.files[0]
+  
+
+  const uploadFileToFirebase = async (file: FileWithPath) => {
+    if(file){
+      const resizedFile = await resizeImageToHeight(file, 300)
       const storageRef = ref(storage, `images/${product.barcode}.jpg`)
-      const uploadImage = uploadBytesResumable(storageRef, file);
+      const uploadImage = uploadBytesResumable(storageRef, resizedFile);
 
       // アップロードの状態が変わったら発火
       uploadImage.on(
@@ -38,12 +45,16 @@ const ProductEditor = ({product}: ProductEditorProps) => {
           // 終了したら
           setLoading(false)
           setUploaded(true)
-          router.push("/admin/1")
+          router.push("/admin/products")
           router.refresh()
         }
       )
     }
   }
+
+  const resizeImage = async (file: FileWithPath) => {
+    setUploadFile(await resizeImageToHeight(file, 300))
+  } 
   
   return (
     <>
@@ -63,23 +74,6 @@ const ProductEditor = ({product}: ProductEditorProps) => {
             className="w-full bg-slate-50"
           >
             <Card.Section>
-              {/* {imgUrl ? (
-                <Image
-                  src={imgUrl}
-                  w="auto"
-                  fit="contain"
-                  alt="Norway"
-                  className="mx-auto h-40 md:h-80"
-                />
-              ) : (
-                <Image
-                  src="/products/loader-2.png"
-                  w="auto"
-                  fit="contain"
-                  alt="Norway"
-                  className="mx-auto h-40 md:h-80 animate-spin"
-                />
-              )} */}
               <Image
                 src={`https://firebasestorage.googleapis.com/v0/b/kajilab-store.appspot.com/o/images%2F${product.barcode}.jpg?alt=media&token=c46357bc-f29c-4d5f-8048-33c1d4a65083`}
                 w="auto"
@@ -100,7 +94,57 @@ const ProductEditor = ({product}: ProductEditorProps) => {
               </text>
             </div>
             <div className='mt-5'>商品画像</div>
-            <input type="file" accept='.jpg' onChange={onFileUploadToFirebase} />
+            {/* <input type="file" accept='.jpg' onChange={onFileUploadToFirebase} /> */}
+            <Dropzone
+              onDrop={(files) => {
+                // ファイル操作
+                console.log("ファイルでけた")
+                if(files.length > 0){
+                  setUploadFile(files[0])
+                  setIsUpload(true)
+                  uploadFileToFirebase(files[0])
+                  // resizeImage(files[0])
+                }
+              }}
+              maxSize={20 * 1024 ** 2}  // <- データサイズ上限を指定できる(20MB)
+              accept={IMAGE_MIME_TYPE}  // <- 許容するファイルの拡張子を指定できる
+            >
+              <Group justify="center" gap="xl" mih={220} style={{ pointerEvents: 'none' }} className='border-2 border-slate-600 bg-slate-200'>
+                <Dropzone.Accept>
+                  <IconUpload size={52} color="var(--mantine-color-blue-6)" stroke={1.5} />
+                </Dropzone.Accept>
+                <Dropzone.Reject>
+                  <IconX size={52} color="var(--mantine-color-red-6)" stroke={1.5} />
+                </Dropzone.Reject>
+                <Dropzone.Idle>
+                  <div>
+                    <div>
+                      {/* アイコン */}
+                      <Text>
+                        ファイルをドラッグ&ドロップ
+                      </Text>
+                    </div>
+                    <div>
+                      {uploadFile ? (
+                        <div>
+                          <Text>
+                            {uploadFile.name}
+                          </Text>
+                          <img
+                            src={URL.createObjectURL(uploadFile)}
+                            alt={uploadFile.name}
+                          />
+                        </div>
+                      ) : (
+                        <Text>
+                          ファイルが選択されていません
+                        </Text>
+                      )}
+                    </div>
+                  </div>
+                </Dropzone.Idle>
+              </Group>
+            </Dropzone>
 
             <div className='mt-5'>タグ</div>
             {/* <MultiSelect
