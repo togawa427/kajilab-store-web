@@ -98,7 +98,6 @@ const ProductEditor = ({product}: ProductEditorProps) => {
             <Dropzone
               onDrop={(files) => {
                 // ファイル操作
-                console.log("ファイルでけた")
                 if(files.length > 0){
                   setUploadFile(files[0])
                   setIsUpload(true)
@@ -109,7 +108,7 @@ const ProductEditor = ({product}: ProductEditorProps) => {
               maxSize={20 * 1024 ** 2}  // <- データサイズ上限を指定できる(20MB)
               accept={IMAGE_MIME_TYPE}  // <- 許容するファイルの拡張子を指定できる
             >
-              <Group justify="center" gap="xl" mih={220} style={{ pointerEvents: 'none' }} className='border-2 border-slate-600 bg-slate-200'>
+              <Group justify="center" gap="xl" mih={220} style={{ pointerEvents: 'none' }} className='border-2 border-slate-200 bg-slate-100'>
                 <Dropzone.Accept>
                   <IconUpload size={52} color="var(--mantine-color-blue-6)" stroke={1.5} />
                 </Dropzone.Accept>
