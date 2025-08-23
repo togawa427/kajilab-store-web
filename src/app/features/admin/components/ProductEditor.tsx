@@ -2,7 +2,7 @@
 import { useFirebaseStorageURL } from '@/app/hooks/useFirebaseStorageURL';
 import storage from '@/firebase';
 import { Product } from '@/types/response';
-import { Button, Card, FileButton, FileInput, Group, Image, MultiSelect, Text, TextInput } from '@mantine/core';
+import { Button, Card, FileButton, FileInput, Group, Image, MultiSelect, NumberInput, Text, TextInput } from '@mantine/core';
 import { Form, useForm } from '@mantine/form';
 import axios from 'axios';
 import { getDownloadURL, getStorage, ref, uploadBytes, uploadBytesResumable } from 'firebase/storage';
@@ -11,6 +11,7 @@ import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react'
 import { Dropzone, DropzoneProps, FileWithPath, IMAGE_MIME_TYPE } from '@mantine/dropzone';
 import { IconPhoto, IconUpload, IconX } from '@tabler/icons-react';
 import { resizeImageToHeight } from '../utils';
+import { updateProduct } from '@/api';
 
 type ProductEditorProps = {
   product: Product;
@@ -24,6 +25,22 @@ const ProductEditor = ({product}: ProductEditorProps) => {
   const [uploadFile, setUploadFile] = useState<FileWithPath>()
   const [isUpload, setIsUpload] = useState(false)
 
+  const form = useForm({
+    initialValues: {
+      price: product.price,
+      stock: product.stock
+    },
+    validate:{
+      price: (value) => (value !==0 ? null : '入力してください'),
+      stock: (value) => (value !==0 ? null : '入力してください'),
+    }
+  });
+
+  const submitProductForm = () => {
+    setLoading(true)
+    updateProduct(product.id, product.name, product.barcode, form.values.price, form.values.stock, product.tag_id)
+    setLoading(false)
+  }
   
 
   const uploadFileToFirebase = async (file: FileWithPath) => {
@@ -92,6 +109,29 @@ const ProductEditor = ({product}: ProductEditorProps) => {
                 値段：{product.price}<br/>
                 在庫数：{product.stock}
               </text>
+            </div>
+            <div>
+              
+            <form onSubmit={submitProductForm} className='max-w-60'>
+              <NumberInput
+                withAsterisk
+                label="値段"
+                placeholder="50"
+                key={form.key('price')}
+                {...form.getInputProps('price')}
+              />
+              <NumberInput
+                withAsterisk
+                label="在庫数"
+                placeholder='2'
+                key={form.key('stock')}
+                {...form.getInputProps('stock')}
+              />
+              <Group justify="flex-end" mt="md">
+                <Button type="submit">保存</Button>
+              </Group>
+            </form>
+
             </div>
             <div className='mt-5'>商品画像</div>
             {/* <input type="file" accept='.jpg' onChange={onFileUploadToFirebase} /> */}
