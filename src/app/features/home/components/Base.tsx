@@ -11,6 +11,7 @@ import { useRouter } from 'next/navigation'
 const Base = () => {
   const [resProducts, setResProducts] = useState<Products | null>(null)
   const [isError, setIsError] = useState<boolean>(false)
+  const [isLoading, setIsLoading] = useState<boolean>(false)
   const [currentPage, setCurrentPage] = useState<number>();
   const searchParams = useSearchParams();
   const paramPage = searchParams.get("page");
@@ -30,12 +31,14 @@ const Base = () => {
     const fetchData = async () => {
       try {
         let data
+        setIsLoading(true)
         if(paramPage){
           data = await getPageProducts(parseInt(paramPage))
         } else {
           data = await getPageProducts(1)
         }
         setResProducts(data);
+        setIsLoading(false)
       } catch (error) {
         console.error('Error fetching products:', error);
         setIsError(true)
@@ -46,24 +49,29 @@ const Base = () => {
 
   if(resProducts == null)  return(<Loading message='商品情報取得中'/>)
   if(isError) return(<div>読み込み失敗</div>)
-
   return (
     <div className="mb-10">
       <div className="flex justify-center">
         <Pagination value={currentPage} onChange={setCurrentPage} total={(resProducts.total_count/20)+1} />
       </div>
-      <div className="flex flex-wrap justify-center">
-        {resProducts.products.map((product) => (
-          <div key={product.id} className="mx-1 my-1">
-            <HomeCompont.ProductCard
-              product={product}
-            />
+      {isLoading ? (
+        <Loading message='商品情報取得中' />
+      ) : (
+        <>
+          <div className="flex flex-wrap justify-center">
+            {resProducts.products.map((product) => (
+              <div key={product.id} className="mx-1 my-1">
+                <HomeCompont.ProductCard
+                  product={product}
+                />
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
-      <div className="flex justify-center">
-        <Pagination value={currentPage} onChange={setCurrentPage} total={(resProducts.total_count/20)+1} />
-      </div>
+          <div className="flex justify-center">
+            <Pagination value={currentPage} onChange={setCurrentPage} total={(resProducts.total_count/20)+1} />
+          </div>
+        </>
+      )}
     </div>
   )
 }
