@@ -15,6 +15,7 @@ type BasePropsType = {
 const Base = ({currentAsset}: BasePropsType) => {
   const [resProducts, setResProducts] = useState<Products>()
   const [isError, setIsError] = useState<boolean>(false)
+  const [isLoading, setIsLoading] = useState<boolean>(false)
   const [currentPage, setCurrentPage] = useState<number>();
   const searchParams = useSearchParams();
   const paramPage = searchParams.get("page");
@@ -35,6 +36,7 @@ const Base = ({currentAsset}: BasePropsType) => {
     const fetchData = async () => {
       try {
         let data
+        setIsLoading(true)
         if(paramPage){
           data = await getPageProducts(parseInt(paramPage))
         } else {
@@ -45,6 +47,7 @@ const Base = ({currentAsset}: BasePropsType) => {
         console.error('Error fetching products:', error);
         setIsError(true)
       }
+      setIsLoading(false)
     };
     fetchData();
   }, [paramPage]);
@@ -63,18 +66,24 @@ const Base = ({currentAsset}: BasePropsType) => {
       <div className="flex justify-center">
         <Pagination value={currentPage} onChange={setCurrentPage} total={(resProducts.total_count/20)+1} />
       </div>
-      <div className="flex flex-wrap justify-center">
-        {resProducts.products.map((product) => (
-          <div key={product.id} className="mx-1 my-1">
-            <Admin.ProductCardAdmin
-              product={product}
-            />
+      {isLoading ? (
+        <Loading message='商品情報取得中' />
+      ) : (
+        <>
+          <div className="flex flex-wrap justify-center">
+            {resProducts.products.map((product) => (
+              <div key={product.id} className="mx-1 my-1">
+                <Admin.ProductCardAdmin
+                  product={product}
+                />
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
-      <div className="flex justify-center">
-        <Pagination value={currentPage} onChange={setCurrentPage} total={(resProducts.total_count/20)+1} />
-      </div>
+          <div className="flex justify-center">
+            <Pagination value={currentPage} onChange={setCurrentPage} total={(resProducts.total_count/20)+1} />
+          </div>
+        </>
+      )}
     </>
   )
 }
