@@ -51,6 +51,7 @@ function AssetBase({assetsHistory}: AssetBaseProps) {
       })
       setAssetsMainChartData(tmpAssetsMainChartData)
       setAssetsSubChartData(tmpAssetsChartData)
+      console.log(assetsHistory)
   }, [assetsHistory, selectedDay]);
 
   const handleSelectDay = async (day: string) => {

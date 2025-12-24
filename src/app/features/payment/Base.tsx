@@ -16,6 +16,7 @@ type BasePropsType = {
 }
 
 const Base = ({year, month, salesMonth}: BasePropsType) => {
+  console.log(salesMonth)
   return (
     <div className="max-w-3xl mx-auto">
       {/* 年月日 */}
@@ -23,7 +24,7 @@ const Base = ({year, month, salesMonth}: BasePropsType) => {
 
       {/* 履歴 */}
       <PaymentComponent.PaymentsList
-        salesDays={salesMonth.sales}
+        salesMonth={salesMonth}
         month={salesMonth.month}
         year={salesMonth.year}
         responseDate={dayjs(salesMonth.response_date, 'YYYY-MM-DD HH:mm:ss').toDate()}

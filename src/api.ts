@@ -33,7 +33,9 @@ export const getPageProducts = async (page: number): Promise<Products> => {
   return products
 }
 
-export const getProductByBarcode = async (barcode: number): Promise<Product> => {
+export const 
+
+getProductByBarcode = async (barcode: number): Promise<Product> => {
   //const res = await fetch(`http://localhost:8080/api/v1/products/134912341232`, {cache: "no-store"})
   // const res = await fetch(`http://localhost:8080/api/v1/products/${barcode}`, {cache: "no-store"})
   const res = await fetch(`${baseURL}/api/v1/products/${barcode}`, {cache: "no-store"})
@@ -60,7 +62,8 @@ export const getKajilabpayLogsByUserId = async (userId: number, limit: number, o
 }
 
 export const getSalesMonth = async (year: number, month: number): Promise<SalesMonth> => {
-  const res = await fetch(`${baseURL}/api/v1/sales?year=${year}&&month=${month}`, {next: {revalidate: 3600}})
+  // const res = await fetch(`${baseURL}/api/v1/sales?year=${year}&&month=${month}`, {next: {revalidate: 3600}})
+  const res = await fetch(`${baseURL}/api/v1/sales?year=${year}&&month=${month}`, {cache: "no-store"})
   const salesMonth:SalesMonth = await res.json()
   return salesMonth
 }
