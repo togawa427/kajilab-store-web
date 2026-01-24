@@ -19,8 +19,8 @@ const SalesGraph = ({salesMonth}: BasePropsType) => {
           { name: 'sales', color: 'rgba(27, 43, 168, 1)' }
         ]}
         barProps={{
-        fillOpacity: 0.9
-      }}
+          fillOpacity: 0.9
+        }}
       />
     </div>
   )

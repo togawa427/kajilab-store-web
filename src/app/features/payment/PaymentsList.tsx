@@ -14,7 +14,7 @@ type PaymentListsPropsType = {
 
 function PaymentsList({salesMonth, month, year, responseDate}: PaymentListsPropsType) {
   const flag = 0
-  const [showMode, setShowMode] = useState('graph');
+  const [showMode, setShowMode] = useState('list');
 
   const handleSelectDay = async (mode: string) => {
     setShowMode(mode)
@@ -27,8 +27,8 @@ function PaymentsList({salesMonth, month, year, responseDate}: PaymentListsProps
             value={String(salesMonth)}
             onChange={handleSelectDay}
             data={[
-              { label: 'グラフ', value: 'graph' },
               { label: 'リスト', value: 'list' },
+              { label: 'グラフ', value: 'graph' },
             ]}
           />
         </div>

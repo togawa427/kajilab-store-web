@@ -62,8 +62,8 @@ export const getKajilabpayLogsByUserId = async (userId: number, limit: number, o
 }
 
 export const getSalesMonth = async (year: number, month: number): Promise<SalesMonth> => {
-  // const res = await fetch(`${baseURL}/api/v1/sales?year=${year}&&month=${month}`, {next: {revalidate: 3600}})
-  const res = await fetch(`${baseURL}/api/v1/sales?year=${year}&&month=${month}`, {cache: "no-store"})
+  const res = await fetch(`${baseURL}/api/v1/sales?year=${year}&&month=${month}`, {next: {revalidate: 3600}})
+  // const res = await fetch(`${baseURL}/api/v1/sales?year=${year}&&month=${month}`, {cache: "no-store"})
   const salesMonth:SalesMonth = await res.json()
   return salesMonth
 }
