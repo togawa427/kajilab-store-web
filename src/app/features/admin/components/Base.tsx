@@ -64,7 +64,13 @@ const Base = ({currentAsset}: BasePropsType) => {
       </Link>
     
       <div className="flex justify-center">
-        <Pagination value={currentPage} onChange={setCurrentPage} total={(resProducts.total_count/20)+1} />
+        <Pagination
+          value={currentPage}
+          onChange={setCurrentPage}
+          total={(resProducts.total_count/20)+1}
+          size="lg"
+          color="#FD8AB9"
+        />
       </div>
       {isLoading ? (
         <Loading message='商品情報取得中' />
@@ -80,7 +86,13 @@ const Base = ({currentAsset}: BasePropsType) => {
             ))}
           </div>
           <div className="flex justify-center">
-            <Pagination value={currentPage} onChange={setCurrentPage} total={(resProducts.total_count/20)+1} />
+            <Pagination
+              value={currentPage}
+              onChange={setCurrentPage}
+              total={(resProducts.total_count/20)+1}
+              size="lg"
+              color="#FD8AB9"
+            />
           </div>
         </>
       )}

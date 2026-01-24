@@ -1,7 +1,8 @@
 "use client"
-import { Button, Menu, Text } from '@mantine/core'
+import { Button, Menu, Text, UnstyledButton } from '@mantine/core'
 import { IconMenu, IconMenu2 } from '@tabler/icons-react'
 import { useRouter } from 'next/navigation';
+import Image from "next/image";
 import React from 'react'
 
 function LinkSelect() {
@@ -42,32 +43,54 @@ function LinkSelect() {
   return (
     <Menu shadow="md" width={200}>
       <Menu.Target>
-        <Button variant="transparent" color="rgba(255, 255, 255, 1)"><IconMenu2 /></Button>
+        <UnstyledButton
+          style={{
+            // width: 41,
+            height: '100%',
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <Image
+            src="/images/syouten-menu.png"
+            alt="menu"
+            width={53}
+            height={53}
+            className='h-[40px] w-auto md:h-[53px]'
+          />
+        </UnstyledButton>
       </Menu.Target>
 
-      <Menu.Dropdown>
-        <Menu.Item onClick={handleUrlIndex} className="text-lg font-semibold">
+      <Menu.Dropdown className='w-fit px-5 py-5 bg-kirby-blue bg-opacity-90 rounded-xl border-2 border-gray-300'>
+        <div className=''>
+        <Menu.Item color='black' onClick={handleUrlIndex} className="text-lg font-semibold text-white hover:bg-kirby-blue underline-offset-4 hover:underline hover:decoration-white">
           商品在庫一覧
         </Menu.Item>
-        <Menu.Item onClick={handleUrlPaymentMonth} className="text-lg font-semibold">
+        <Menu.Item color='black' onClick={handleUrlPaymentMonth} className="text-lg font-semibold text-white hover:bg-kirby-blue underline-offset-4 hover:underline hover:decoration-white">
           月間売上
         </Menu.Item>
 
         <Menu.Divider />
 
-        <Menu.Label className="text-lg">↓商店係専用</Menu.Label>
-        <Menu.Item onClick={handleUrlAdminIndex} className="text-lg text-red-800 font-semibold">
+        <Menu.Label className="text-lg">
+          <div className='bg-kirby-pink px-1 py-1 rounded-full text-white'>
+            ↓商店係専用
+          </div>
+        </Menu.Label>
+        <Menu.Item color='black' onClick={handleUrlAdminIndex} className="text-lg text-kirby-star font-semibold hover:bg-kirby-blue underline-offset-4 hover:underline hover:decoration-white">
           商品一覧
         </Menu.Item>
-        <Menu.Item onClick={handleUrlAdminAsset} className="text-lg text-red-800 font-semibold">
+        <Menu.Item color='black' onClick={handleUrlAdminAsset} className="text-lg text-kirby-star font-semibold hover:bg-kirby-blue underline-offset-4 hover:underline hover:decoration-white">
           資産推移グラフ
         </Menu.Item>
-        <Menu.Item onClick={handleUrlAdminEditAsset} className="text-lg text-red-800 font-semibold">
+        <Menu.Item color='black' onClick={handleUrlAdminEditAsset} className="text-lg text-kirby-star font-semibold hover:bg-kirby-blue underline-offset-4 hover:underline hover:decoration-white">
           残高修正
         </Menu.Item>
-        <Menu.Item onClick={handleUrlAdminInventory} className="text-lg text-red-800 font-semibold">
+        <Menu.Item color='black' onClick={handleUrlAdminInventory} className="text-lg text-kirby-star font-semibold hover:bg-kirby-blue underline-offset-4 hover:underline hover:decoration-white">
           棚卸し
         </Menu.Item>
+        </div>
       </Menu.Dropdown>
     </Menu>
   )

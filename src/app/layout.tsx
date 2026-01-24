@@ -5,6 +5,7 @@ import { ColorSchemeScript, MantineProvider } from '@mantine/core';
 import Header from '@/app/components/Header';
 import { Suspense } from 'react';
 import Loading from './components/Loading';
+import { kosugiMaru } from '@/app/utils/fonts';
 
 export const metadata = {
   title: '梶研商店',
@@ -23,11 +24,11 @@ export default function RootLayout({
       </head>
       {/* <body className="bg-[#DEDBCE] text-[#55441E]"> */}
       {/* <body className="bg-[url('https://www.kirby.jp/images/0427/bg-pattern.png')]"> */}
-      <body className="bg-[url('/header-bg.jpg')]">
+      <body className={`bg-[url('/header-bg.png')] ${kosugiMaru.className}`}>
         <MantineProvider>
-          <Header/>
+          <Header />
           <Suspense fallback={<Loading message='読み込み中'/>}>
-            <div className="mx-2 md:mx-10 mt-2 md:mt-5">
+            <div className="mx-2 md:mx-10 mt-24 md:mt-28">
             {children}
             </div>
           </Suspense>

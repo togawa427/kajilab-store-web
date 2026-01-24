@@ -7,6 +7,7 @@ import { Product, Products } from '@/types/response'
 import Loading from '@/app/components/Loading'
 import { useSearchParams } from 'next/navigation'
 import { useRouter } from 'next/navigation'
+import { IconArrowRight } from '@tabler/icons-react'
 
 const Base = () => {
   const [resProducts, setResProducts] = useState<Products | null>(null)
@@ -52,7 +53,14 @@ const Base = () => {
   return (
     <div className="mb-10">
       <div className="flex justify-center">
-        <Pagination value={currentPage} onChange={setCurrentPage} total={(resProducts.total_count/20)+1} />
+        <Pagination 
+          nextIcon={IconArrowRight}
+          value={currentPage}
+          onChange={setCurrentPage}
+          total={(resProducts.total_count/20)+1}
+          size="lg"
+          color="#FD8AB9"
+        />
       </div>
       {isLoading ? (
         <Loading message='商品情報取得中' />
@@ -68,7 +76,13 @@ const Base = () => {
             ))}
           </div>
           <div className="flex justify-center">
-            <Pagination value={currentPage} onChange={setCurrentPage} total={(resProducts.total_count/20)+1} />
+            <Pagination
+              value={currentPage}
+              onChange={setCurrentPage}
+              total={(resProducts.total_count/20)+1}
+              size="lg"
+              color="#FD8AB9"
+            />
           </div>
         </>
       )}

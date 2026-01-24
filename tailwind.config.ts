@@ -14,6 +14,13 @@ const customColors = {
     900: '#CFEDE2',
     DEFAULT: '#3FAC84',
   },
+  kirby: {
+    blue: '#0F005B',
+    star: '#FADA0A',
+    lightpink: '#FD8AB9',
+    pink: '#E6518C',
+    DEFAULT: '#0F005B'
+  }
 }
 
 const config: Config = {
@@ -26,6 +33,7 @@ const config: Config = {
     extend: {
       colors: {
         forest: customColors.forest,
+        kirby: customColors.kirby
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
