@@ -1,11 +1,14 @@
 "use client"
 import { Button } from '@mantine/core'
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
+import * as QRCode from "qrcode";
+import JsBarcode from "jsbarcode";
 
 const Base = () => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const barcodeRef = useRef<HTMLCanvasElement | null>(null);
 
-  const handleClick = () => {
+  const handleClick = (qrcodeUrl: string, barcodeText: string) => {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
@@ -61,6 +64,17 @@ const Base = () => {
     let zandakaHeight = nameHeight
     ctx.fillStyle = "#FFFFFF"
     ctx.fillRect(contentStartX+nameWidth+20, imgHeight+250, zandakaWidth, zandakaHeight)
+    ctx.fillStyle = "#000000"
+    ctx.font = "12px sans-serif";
+    ctx.textBaseline = "bottom"
+    ctx.fillText(qrcodeUrl, contentStartX + nameWidth + 20 + (zandakaWidth/2), imgHeight+249+(zandakaHeight))
+    QRCode.toDataURL(qrcodeUrl, { width: 200 }).then((url) => {
+      const img = new Image();
+      img.onload = () => {
+        ctx.drawImage(img, contentStartX+nameWidth+20, imgHeight+250, zandakaWidth, zandakaWidth);
+      };
+      img.src = url;
+    });
 
     // バーコード部分
     let barcodeWidth = 918
@@ -72,6 +86,16 @@ const Base = () => {
     ctx.fillText("精算時提示用バーコード", contentStartX, imgHeight+570)
     ctx.fillStyle = "#FFFFFF"
     ctx.fillRect(contentStartX, imgHeight+630, barcodeWidth, barcodeHeight)
+    const barcodeCanvas = barcodeRef.current;
+    if (!barcodeCanvas) return;
+    JsBarcode(barcodeCanvas, barcodeText, {
+      format: "CODE128",
+      width: 2,
+      height: 140,
+      displayValue: false,
+      margin: 20,
+    });
+    ctx.drawImage(barcodeCanvas, contentStartX, imgHeight + 630, barcodeWidth, barcodeHeight);
 
 
     // 画像読み込み
@@ -85,13 +109,20 @@ const Base = () => {
 
   return (
     <div>
-      <Button onClick={handleClick}>
+      <Button onClick={() => handleClick("https://kjlbstore.kajilab.dev", "1088153966793")}>
         白い画像を生成
       </Button>
 
       <canvas
         ref={canvasRef}
         className="border border-gray-300 w-96"
+      />
+
+      <canvas
+        ref={barcodeRef}
+        width={918}
+        height={176}
+        style={{ display: "none" }}
       />
     </div>
   )
