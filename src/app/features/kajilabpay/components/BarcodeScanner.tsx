@@ -53,8 +53,8 @@ export default function BarcodeScanner({handleScan}: BarcodeScannerProps) {
 
   return (
     <div>
-      <Button onClick={startScan}>カメラ起動</Button>
-      <div>読み取り結果：{barcodeStr}</div>
+      <Button color="#FADA0A" className='mt-1 text-gray-900' onClick={startScan} >カメラ起動</Button>
+      {/* <div>読み取り結果：{barcodeStr}</div> */}
       <video ref={videoRef} className="max-w-96"/>
     </div>
   )

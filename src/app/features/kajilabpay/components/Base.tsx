@@ -5,12 +5,41 @@ import * as QRCode from "qrcode";
 import JsBarcode from "jsbarcode";
 import * as KajilabPayComponent from "@/app/features/kajilabpay/components/Index"
 import { postKajilabPayQR } from '@/api';
+import axios from 'axios';
 
 const Base = () => {
   const [haveKajilabPayCard, setHaveKajilabPayCard] = useState(false)
   const [userBarcode, setUserBarcode] = useState('')
   const [userName, setUserName] = useState('')
   const [userQRCodeURL, setUserQRCodeURL] = useState('')
+  const [errorMessage, setErrorMessage] = useState('')
+
+  const handleScanKajilabPayCard =  async (barcodeText: string) => {
+    try {
+      const res = await axios.post(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/users/kajilabpayqr`,
+        {barcode: barcodeText},
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
+      console.log(res.data)
+      setUserBarcode(res.data.barcode)
+      setUserName(res.data.name)
+      setUserQRCodeURL(`${process.env.NEXT_PUBLIC_BASE_URL}/balanceInqueryQR/${res.data.balance_qr_payload}`)
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        console.error("エラー発生:", error.response?.status)
+        console.error("レスポンス:", error.response?.data)
+        setErrorMessage("未登録の梶研Payカードが読み取られました")
+      } else {
+        console.error("予期しないエラー:", error)
+      }
+    }
+    console.log(barcodeText)
+  }
   
 
   return (
@@ -46,7 +75,10 @@ const Base = () => {
           />
         ) : haveKajilabPayCard ? (
           // 梶研Payカードを持っている場合
-          <KajilabPayComponent.NotHaveKajilabPayCard/>
+          <KajilabPayComponent.NotHaveKajilabPayCard
+            handleScan={handleScanKajilabPayCard}
+            errorMessage={errorMessage}
+          />
         ) : (
           // 梶研Payカードを持っていない場合
           <KajilabPayComponent.HaveKajilabPayCard

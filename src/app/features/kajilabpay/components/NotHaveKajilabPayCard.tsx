@@ -1,15 +1,20 @@
 import { Button } from '@mantine/core'
 import React from 'react'
+import * as KajilabPayComponent from "@/app/features/kajilabpay/components/Index"
 
-function NotHaveKajilabPayCard() {
+type HaveKajilabPayCardProps = {
+  handleScan: (barcodeText: string) => Promise<void>
+  errorMessage: string
+}
+
+function NotHaveKajilabPayCard({handleScan, errorMessage}: HaveKajilabPayCardProps) {
+  
   return (
     <div>
       <p>梶研Payカード裏面の精算時提示用バーコードを</p>
       <p>スマホカメラで読み取ってください</p>
-      <Button color="#FADA0A" className='mt-1 text-gray-900'>
-        カメラを起動
-      </Button>
-      {/* <KajilabPayComponent.BarcodeScanner handleScan={createKajilabPayCardImage}/> */}
+      <p className='text-kirby-pink text-xs'>{errorMessage}</p>
+      <KajilabPayComponent.BarcodeScanner handleScan={handleScan}/>
     </div>
   )
 }
