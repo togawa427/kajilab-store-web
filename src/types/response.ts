@@ -67,3 +67,9 @@ export type SalesMonth = {
   response_date: string;
   sales: SalesDay[];
 }
+
+export type KajilabPayMobile = {
+  name: string;
+  barcode: string;
+  balance_qr_payload: string;
+}

@@ -1,3 +1,8 @@
 import Base from "./Base";
+import BarcodeScanner from "./BarcodeScanner";
+import NotHaveKajilabPayCard from "./NotHaveKajilabPayCard";
+import HaveKajilabPayCard from "./HavekajilabPayCard";
+import KajilabPayMobileDownload from "./KajilabPayMobileDownload";
+import KajilabPayMobileCanvas from "./KajilabPayMobileCanvas";
 
-export { Base };
+export { Base, BarcodeScanner, NotHaveKajilabPayCard, HaveKajilabPayCard, KajilabPayMobileDownload, KajilabPayMobileCanvas };

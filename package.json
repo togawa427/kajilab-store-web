@@ -17,6 +17,8 @@
     "@mantine/modals": "^7.11.2",
     "@tabler/icons-react": "^3.29.0",
     "@types/formidable": "^3.4.5",
+    "@zxing/browser": "^0.1.5",
+    "@zxing/library": "^0.21.3",
     "axios": "^1.6.8",
     "dayjs": "^1.11.13",
     "express": "^4.19.2",

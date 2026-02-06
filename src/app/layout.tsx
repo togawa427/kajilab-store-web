@@ -5,7 +5,7 @@ import { ColorSchemeScript, MantineProvider } from '@mantine/core';
 import Header from '@/app/components/Header';
 import { Suspense } from 'react';
 import Loading from './components/Loading';
-import { kosugiMaru } from '@/app/utils/fonts';
+import { kosugiMaru, mplusRounded } from '@/app/utils/fonts';
 
 export const metadata = {
   title: '梶研商店',
@@ -20,11 +20,15 @@ export default function RootLayout({
   return (
     <html lang="ja">
       <head>
+        <link
+          href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;700;800&display=swap"
+          rel="stylesheet"
+        />
         <ColorSchemeScript />
       </head>
       {/* <body className="bg-[#DEDBCE] text-[#55441E]"> */}
       {/* <body className="bg-[url('https://www.kirby.jp/images/0427/bg-pattern.png')]"> */}
-      <body className={`bg-[url('/header-bg.png')] ${kosugiMaru.className}`}>
+      <body className={`bg-[url('/header-bg.png')] ${mplusRounded.className} min-w-[360px]` }>
         <MantineProvider>
           <Header />
           <Suspense fallback={<Loading message='読み込み中'/>}>

@@ -19,6 +19,8 @@ const customColors = {
     star: '#FADA0A',
     lightpink: '#FD8AB9',
     pink: '#E6518C',
+    lightorange: '#FD8E44',
+    orange: 'FD6805',
     DEFAULT: '#0F005B'
   }
 }

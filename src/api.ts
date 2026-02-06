@@ -1,4 +1,4 @@
-import { Asset, AssetHistory, Product, User, PaymentProduct, Products, SalesMonth, KajilabpayLog } from "./types/response";
+import { Asset, AssetHistory, Product, User, PaymentProduct, Products, SalesMonth, KajilabpayLog, KajilabPayMobile } from "./types/response";
 
 const baseURL = process.env.NEXT_PUBLIC_BASE_URL;
 
@@ -33,9 +33,7 @@ export const getPageProducts = async (page: number): Promise<Products> => {
   return products
 }
 
-export const 
-
-getProductByBarcode = async (barcode: number): Promise<Product> => {
+export const getProductByBarcode = async (barcode: number): Promise<Product> => {
   //const res = await fetch(`http://localhost:8080/api/v1/products/134912341232`, {cache: "no-store"})
   // const res = await fetch(`http://localhost:8080/api/v1/products/${barcode}`, {cache: "no-store"})
   const res = await fetch(`${baseURL}/api/v1/products/${barcode}`, {cache: "no-store"})
@@ -119,4 +117,19 @@ export const updateProduct = async (id: number, name: string, barcode: number, p
 
   console.log(res.status)
   return res.status
+}
+
+export const postKajilabPayQR = async (barcode: string): Promise<KajilabPayMobile> => {
+  const res = await fetch(`${baseURL}/api/v1/users/kajilabpayqr`, {
+      method: "POST",
+      headers: {
+          "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        barcode: barcode
+      })
+  })
+
+  const kajilabpay = await res.json()
+  return kajilabpay
 }
