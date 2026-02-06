@@ -1,7 +1,7 @@
 import Base from "./Base";
 import BarcodeScanner from "./BarcodeScanner";
-import NotHaveKajilabPayCard from "./NotHaveKajilabPayCard";
-import HaveKajilabPayCard from "./HavekajilabPayCard";
+import NotHaveKajilabPayCard from "./NotHavekajilabPayCard";
+import HaveKajilabPayCard from "./HaveKajilabPayCard";
 import KajilabPayMobileDownload from "./KajilabPayMobileDownload";
 import KajilabPayMobileCanvas from "./KajilabPayMobileCanvas";
 

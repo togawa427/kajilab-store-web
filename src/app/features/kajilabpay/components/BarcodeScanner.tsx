@@ -11,8 +11,6 @@ type BarcodeScannerProps = {
 export default function BarcodeScanner({handleScan}: BarcodeScannerProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const controlsRef = useRef<{ stop: () => void } | null>(null);
-  const [isScanning, setIsScanning] = useState<Boolean>(false)
-  const [barcodeStr, setBarcodeStr] = useState("")
 
   const startScan = () => {
     const hints = new Map();
@@ -27,7 +25,6 @@ export default function BarcodeScanner({handleScan}: BarcodeScannerProps) {
     ]);
 
     const codeReader = new BrowserMultiFormatReader(hints);
-    setIsScanning(true)
 
     codeReader.decodeFromVideoDevice(
       undefined, // デフォルトカメラ
@@ -35,8 +32,6 @@ export default function BarcodeScanner({handleScan}: BarcodeScannerProps) {
       (result, error) => {
         if (result) {
           console.log("読み取り結果:", result.getText());
-          setBarcodeStr(result.getText())
-          setIsScanning(false)
           handleScan(result.getText())
           controlsRef.current?.stop();
         }
@@ -54,19 +49,7 @@ export default function BarcodeScanner({handleScan}: BarcodeScannerProps) {
   return (
     <div>
       <Button color="#FADA0A" className='mt-1 text-gray-900' onClick={startScan} >カメラ起動</Button>
-      {/* <div>読み取り結果：{barcodeStr}</div> */}
-      <video ref={videoRef} className="max-w-96"/>
+      <video ref={videoRef} className="max-w-96 mx-auto"/>
     </div>
-  )
-  // return (
-  //   <div>
-  //     <Button onClick={startScan}>カメラ起動</Button>
-  //     {isScanning && <video ref={videoRef} className="max-w-96"/>}
-  //     {isScanning && <div>あいうえお</div>}
-  //   </div>
-  // )
-  // if(isScanning) return <video ref={videoRef} className="w-full"/>
-  // return <Button onClick={startScan}>カメラ起動</Button>
-  
-  
+  )  
 }

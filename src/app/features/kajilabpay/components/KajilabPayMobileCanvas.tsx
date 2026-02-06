@@ -17,6 +17,22 @@ function KajilabPayMobileCanvas({userBarcode, name, qrcodeUrl}: KajilabPayMobile
   const barcodeRef = useRef<HTMLCanvasElement | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
+  // LocalStorage保存
+  useEffect(() => {
+    if (!userBarcode || !name || !qrcodeUrl) return;
+    if (typeof window === "undefined") return;
+
+    localStorage.setItem(
+      "kajilabpaymobile",
+      JSON.stringify({
+        userBarcode,
+        name,
+        qrcodeUrl,
+      })
+    );
+  }, [userBarcode, name, qrcodeUrl]);
+
+  // Canvas作成
   useEffect(() => {
     setIsLoading(false)
     console.log("QRは")
