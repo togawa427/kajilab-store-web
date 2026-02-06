@@ -28,9 +28,6 @@ const Base = () => {
     try {
       const parsed = JSON.parse(saved);
       if (parsed.userBarcode && parsed.name && parsed.qrcodeUrl) {
-        console.log(parsed.userBarcode)
-        console.log(parsed.name)
-        console.log(parsed.qrcodeUrl)
         setUserBarcode(parsed.userBarcode);
         setUserName(parsed.name);
         setUserQRCodeURL(parsed.qrcodeUrl);

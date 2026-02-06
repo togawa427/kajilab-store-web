@@ -1,4 +1,4 @@
-import { getUserByBarcode } from "@/api";
+import { getUserByKajilabPay } from "@/api";
 import Base from "@/app/features/balanceInqueryQR/components/Base";
 
 export default async function BalanceInQueryQRPage({
@@ -6,8 +6,7 @@ export default async function BalanceInQueryQRPage({
 }: {
   params: {barcode: string};
 }) {
-  const user = await getUserByBarcode(params.barcode);
-  console.log(user)
+  const user = await getUserByKajilabPay(params.barcode);
   return (
     <div>
       <Base user={user}/>

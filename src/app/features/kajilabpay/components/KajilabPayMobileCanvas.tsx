@@ -35,10 +35,6 @@ function KajilabPayMobileCanvas({userBarcode, name, qrcodeUrl}: KajilabPayMobile
   // Canvas作成
   useEffect(() => {
     setIsLoading(false)
-    console.log("QRは")
-    console.log(qrcodeUrl)
-    console.log(name)
-    console.log(userBarcode)
     const canvas = canvasRef.current;
     if (!canvas) return;
 

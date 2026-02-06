@@ -17,7 +17,7 @@ export default function KajilabPayMobileDownload({userBarcode, name, qrcodeUrl}:
   return (
     <div>
       <p>下の画像をダウンロードして完了です</p>
-      <p className='mb-2'>次回以降の会計も梶研Payカードは使用できます</p>
+      <p className='mb-2'>引き続き梶研Payカードは利用可能です</p>
       <KajilabPayComponent.KajilabPayMobileCanvas
         userBarcode={userBarcode}
         name={name}

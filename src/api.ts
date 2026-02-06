@@ -43,8 +43,10 @@ export const getProductByBarcode = async (barcode: number): Promise<Product> => 
   return product
 }
 
-export const getUserByBarcode = async (barcode: string): Promise<User> => {
-  const res = await fetch(`${baseURL}/api/v1/users/${barcode}`, {cache: "no-store"})
+
+
+export const getUserByKajilabPay = async (qrPayload: string): Promise<User> => {
+  const res = await fetch(`${baseURL}/api/v1/users/kajilabpayqr/${qrPayload}`, {cache: "no-store"})
 
   const user = await res.json()
   return user

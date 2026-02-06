@@ -11,9 +11,7 @@ type BasePropsType = {
 }
 
 const Base = ({user}: BasePropsType) => {
-
   const [kajilabpayLog, setKajilabpayLogs] = useState<KajilabpayLog[]>([])
-
   useEffect(() => {
     const fetchData = async () => {
       try {
