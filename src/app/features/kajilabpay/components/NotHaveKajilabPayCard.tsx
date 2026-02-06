@@ -14,6 +14,7 @@ type NotHaveKajilabPayCardProps = {
 function NotHaveKajilabPayCard({setUserBarcode, setName, setQRcodeUrl}: NotHaveKajilabPayCardProps) {
   const [newName, setNewName] = useState('')
   const [validateMessage, setValidateMessage] = useState("")
+  const [isSubmitting, setIsSubmitting] = useState(false)
   
   const validate = () => {
     if(newName.length === 0) {
@@ -29,6 +30,7 @@ function NotHaveKajilabPayCard({setUserBarcode, setName, setQRcodeUrl}: NotHaveK
 
   const submitForm = async() => {
     if(!validate()) return
+    setIsSubmitting(true)
     console.log("送信！")
     const newUserBarcode = generateUserBarcode()
     try {
@@ -41,9 +43,6 @@ function NotHaveKajilabPayCard({setUserBarcode, setName, setQRcodeUrl}: NotHaveK
           },
         }
       )
-      // console.log(res.data.user.name)
-      // console.log(res.data.user.barcode)
-      // console.log(res.data.user.balance_qr_payload)
       console.log("送信成功！")
       setUserBarcode(res.data.user.barcode)
       setName(res.data.user.name)
@@ -56,6 +55,7 @@ function NotHaveKajilabPayCard({setUserBarcode, setName, setQRcodeUrl}: NotHaveK
         console.error("予期しないエラー:", error)
       }
     }
+    setIsSubmitting(false)
   }
   return (
     <div>
@@ -69,7 +69,7 @@ function NotHaveKajilabPayCard({setUserBarcode, setName, setQRcodeUrl}: NotHaveK
           <p className='text-xs text-kirby-pink'>{validateMessage}</p>
         )}
       </div>
-      <Button color="#FADA0A" className='mt-1 text-gray-900' onClick={submitForm}>
+      <Button color="#FADA0A" className='mt-1 text-gray-900' onClick={submitForm} disabled={isSubmitting}>
         新規登録
       </Button>
     </div>
