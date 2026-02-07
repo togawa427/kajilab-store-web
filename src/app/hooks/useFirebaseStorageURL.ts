@@ -2,10 +2,11 @@ import { Product } from "@/types/response";
 import { getDownloadURL, getStorage, ref } from "firebase/storage";
 import { useState, useEffect } from "react";
 
-export const useFirebaseStorageURL = (product: Product) => {
-  const [imgUrl, setImgUrl] = useState("");
+export const useFirebaseStorageURL = (product: Product | undefined) => {
+  const [imgUrl, setImgUrl] = useState<string | null>(null);
 
   useEffect(() => {
+    if (!product) return
     const storage = getStorage();
     getDownloadURL(ref(storage, `images/${product.barcode}.jpg`))
       .then((url) => {

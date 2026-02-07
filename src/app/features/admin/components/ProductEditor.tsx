@@ -12,23 +12,38 @@ import { Dropzone, DropzoneProps, FileWithPath, IMAGE_MIME_TYPE } from '@mantine
 import { IconPhoto, IconUpload, IconX } from '@tabler/icons-react';
 import { resizeImageToHeight } from '../utils';
 import { updateProduct } from '@/api';
+import { useGetAPI } from '@/app/hooks/useGetAPI';
+import Loading from '@/app/components/Loading';
 
 type ProductEditorProps = {
-  product: Product;
+  barcode: string;
 }
 
-const ProductEditor = ({product}: ProductEditorProps) => {
+const ProductEditor = ({barcode}: ProductEditorProps) => {
   const [loading, setLoading] = useState(false)
   const [isUploaded, setUploaded] = useState(false)
-  const [imgUrl] = useFirebaseStorageURL(product)
   const router = useRouter();
   const [uploadFile, setUploadFile] = useState<FileWithPath>()
   const [isUpload, setIsUpload] = useState(false)
+  const {data: product, isLoading, error} = useGetAPI<Product>(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/products/${barcode}`
+  )
+  const [imgUrl] = useFirebaseStorageURL(product)
+
+  const [formPrice, setFormPrice] = useState<string | number>('');
+  const [formStock, setFormStock] = useState<string | number>('');
+
+
+  useEffect(() => {
+    if(!product) return
+    setFormPrice(product.price)
+    setFormStock(product.stock)
+  }, [product]);
 
   const form = useForm({
     initialValues: {
-      price: product.price,
-      stock: product.stock
+      price: product?.price,
+      stock: product?.stock
     },
     validate:{
       price: (value) => (value !==0 ? null : '入力してください'),
@@ -38,13 +53,17 @@ const ProductEditor = ({product}: ProductEditorProps) => {
 
   const submitProductForm = () => {
     setLoading(true)
-    updateProduct(product.id, product.name, product.barcode, form.values.price, form.values.stock, product.tag_id)
+    if(!product){
+      return
+    }
+    updateProduct(product.id, product.name, product.barcode, Number(formPrice), Number(formStock), product.tag_id)
     setLoading(false)
+    window.location.reload()
   }
   
 
   const uploadFileToFirebase = async (file: FileWithPath) => {
-    if(file){
+    if(file && product){
       const resizedFile = await resizeImageToHeight(file, 300)
       const storageRef = ref(storage, `images/${product.barcode}.jpg`)
       const uploadImage = uploadBytesResumable(storageRef, resizedFile);
@@ -73,8 +92,10 @@ const ProductEditor = ({product}: ProductEditorProps) => {
     setUploadFile(await resizeImageToHeight(file, 300))
   } 
   
+  if(isLoading) return(<Loading message='商品情報取得中'/>)
+  if(error || !product) return(<div>読み込み失敗</div>)
   return (
-    <>
+    <div className='max-w-[600px] mx-auto mb-10'>
     {loading ? (
       <h2>アップロード中...</h2>
     ) : (
@@ -88,7 +109,7 @@ const ProductEditor = ({product}: ProductEditorProps) => {
             padding="lg"
             radius="md"
             withBorder
-            className="w-full bg-slate-50"
+            className="w-full bg-slate-50 pt-10"
           >
             <Card.Section>
               <Image
@@ -112,25 +133,27 @@ const ProductEditor = ({product}: ProductEditorProps) => {
             </div>
             <div>
               
-            <form onSubmit={submitProductForm} className='max-w-60'>
-              <NumberInput
-                withAsterisk
-                label="値段"
-                placeholder="50"
-                key={form.key('price')}
-                {...form.getInputProps('price')}
-              />
-              <NumberInput
-                withAsterisk
-                label="在庫数"
-                placeholder='2'
-                key={form.key('stock')}
-                {...form.getInputProps('stock')}
-              />
-              <Group justify="flex-end" mt="md">
-                <Button type="submit">保存</Button>
-              </Group>
-            </form>
+            <NumberInput
+              withAsterisk
+              label="価格"
+              key="price"
+              value={formPrice}
+              onChange={setFormPrice}
+              className='max-w-60'
+            />
+            <NumberInput
+              withAsterisk
+              label="在庫数"
+              key='stock'
+              value={formStock}
+              onChange={setFormStock}
+              className='max-w-60'
+            />
+            <div className='justify="flex-end" mt="md"'>
+              <Button color="#FADA0A" className='mt-2 text-gray-900' onClick={submitProductForm} disabled={loading}>
+                保存
+              </Button>
+            </div>
 
             </div>
             <div className='mt-5'>商品画像</div>
@@ -185,7 +208,7 @@ const ProductEditor = ({product}: ProductEditorProps) => {
               </Group>
             </Dropzone>
 
-            <div className='mt-5'>タグ</div>
+            {/* <div className='mt-5'>タグ</div> */}
             {/* <MultiSelect
               placeholder="タグを選んでください"
               data={['お菓子', 'ドリンク']}
@@ -196,7 +219,7 @@ const ProductEditor = ({product}: ProductEditorProps) => {
       </>
     )}
 
-    </>
+    </div>
   )
 }
 

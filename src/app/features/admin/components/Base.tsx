@@ -9,53 +9,38 @@ import Loading from '@/app/components/Loading'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { PageTitle } from '@/app/components/PageTitle'
 import { AdminPageTitle } from '@/app/components/AdminPageTitle'
+import { useGetAPI } from '@/app/hooks/useGetAPI'
 
 type BasePropsType = {
   currentAsset: Asset;
 }
 
 const Base = ({currentAsset}: BasePropsType) => {
-  const [resProducts, setResProducts] = useState<Products>()
-  const [isError, setIsError] = useState<boolean>(false)
   const [isLoading, setIsLoading] = useState<boolean>(false)
-  const [currentPage, setCurrentPage] = useState<number>();
-  const searchParams = useSearchParams();
-  const paramPage = searchParams.get("page");
+  const [currentPage, setCurrentPage] = useState<number>(1);
   const router = useRouter()
 
+  const limit = 20
+  const updatedDays = 30
+  const {data: products, isLoading: loading, error} = useGetAPI<Products>(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/products?limit=${limit}&&offset=${limit*(currentPage-1)}&&updated_days=${updatedDays}`
+  )
+  
+  console.log("APIでしゅとく")
+  console.log(products?.total_count)
+
   // ページが変わったタイミング
-    useEffect(() => {
-      const tmpParams = new URLSearchParams()
-      if(currentPage){
-        tmpParams.set("page", String(currentPage))
-        console.log(tmpParams)
-      }
-      router.push(`/admin/products?${tmpParams.toString()}`)
-      router.refresh()
-    }, [currentPage, router])
-
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        let data
-        setIsLoading(true)
-        if(paramPage){
-          data = await getPageProducts(parseInt(paramPage))
-        } else {
-          data = await getPageProducts(1)
-        }
-        setResProducts(data);
-      } catch (error) {
-        console.error('Error fetching products:', error);
-        setIsError(true)
-      }
-      setIsLoading(false)
-    };
-    fetchData();
-  }, [paramPage]);
+    const tmpParams = new URLSearchParams()
+    if(currentPage){
+      tmpParams.set("page", String(currentPage))
+    }
+    router.push(`/admin/products?${tmpParams.toString()}`)
+    router.refresh()
+  }, [currentPage, router])
 
-  if(resProducts == null)  return(<Loading message='商品情報取得中'/>)
-  if(isError) return(<div>読み込み失敗</div>)
+  if(loading) return(<Loading message='商品情報取得中'/>)
+  if(error || !products) return(<div>読み込み失敗</div>)
   return (
     <div className='mb-10 md:pt-5 pt-0'>
       <AdminPageTitle
@@ -73,7 +58,7 @@ const Base = ({currentAsset}: BasePropsType) => {
         <Pagination
           value={currentPage}
           onChange={setCurrentPage}
-          total={(resProducts.total_count/20)+1}
+          total={(products.total_count/20)+1}
           size="lg"
           color="#FD8AB9"
         />
@@ -83,7 +68,7 @@ const Base = ({currentAsset}: BasePropsType) => {
       ) : (
         <>
           <div className="flex flex-wrap justify-center">
-            {resProducts.products.map((product) => (
+            {products.products.map((product) => (
               <div key={product.id} className="mx-1 my-1">
                 <Admin.ProductCardAdmin
                   product={product}
@@ -95,7 +80,7 @@ const Base = ({currentAsset}: BasePropsType) => {
             <Pagination
               value={currentPage}
               onChange={setCurrentPage}
-              total={(resProducts.total_count/20)+1}
+              total={(products.total_count/20)+1}
               size="lg"
               color="#FD8AB9"
             />
