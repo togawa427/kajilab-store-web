@@ -11,20 +11,20 @@ import { PageTitle } from '@/app/components/PageTitle'
 import { AdminPageTitle } from '@/app/components/AdminPageTitle'
 import { useGetAPI } from '@/app/hooks/useGetAPI'
 
-type BasePropsType = {
-  currentAsset: Asset;
-}
-
-const Base = ({currentAsset}: BasePropsType) => {
+const Base = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [currentPage, setCurrentPage] = useState<number>(1);
   const router = useRouter()
 
   const limit = 20
   const updatedDays = 30
-  const {data: products, isLoading: loading, error} = useGetAPI<Products>(
+  const {data: products, isLoading: productsLoading, error: productsError} = useGetAPI<Products>(
     `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/products?limit=${limit}&&offset=${limit*(currentPage-1)}&&updated_days=${updatedDays}`
   )
+  const {data: asset, isLoading: assetLoading, error: assetError} = useGetAPI<Asset>(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/assets`
+  )
+  
   
   console.log("APIでしゅとく")
   console.log(products?.total_count)
@@ -39,8 +39,8 @@ const Base = ({currentAsset}: BasePropsType) => {
     router.refresh()
   }, [currentPage, router])
 
-  if(loading) return(<Loading message='商品情報取得中'/>)
-  if(error || !products) return(<div>読み込み失敗</div>)
+  if(productsLoading || assetLoading) return(<Loading message='商品情報取得中'/>)
+  if(productsError || assetError || !asset || !products) return(<div>読み込み失敗</div>)
   return (
     <div className='mb-10 md:pt-5 pt-0'>
       <AdminPageTitle
@@ -49,8 +49,8 @@ const Base = ({currentAsset}: BasePropsType) => {
       />
       <Link href={`/admin/asset`} className="text-end">
         <div>
-          <div className="text-lg">商店残高（現金）：{currentAsset.money}円</div>
-          <div className="text-lg">商店負債（梶研Pay）：{currentAsset.debt}円</div>
+          <div className="text-lg">商店残高（現金）：{asset.money}円</div>
+          <div className="text-lg">商店負債（梶研Pay）：{asset.debt}円</div>
         </div>
       </Link>
     
