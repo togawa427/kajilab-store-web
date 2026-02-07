@@ -46,6 +46,7 @@ export default function BarcodeScanner({handleScan}: BarcodeScannerProps) {
           console.log("読み取り結果:", result.getText());
           handleScan(result.getText())
           controlsRef.current?.stop();
+          stream.getTracks().forEach(track => track.stop())
         }
       }
     )
@@ -61,7 +62,7 @@ export default function BarcodeScanner({handleScan}: BarcodeScannerProps) {
   return (
     <div>
       <Button color="#FADA0A" className='mt-1 text-gray-900' onClick={startScan} >カメラ起動</Button>
-      <video ref={videoRef} className="max-w-full mx-auto"/>
+      <video ref={videoRef} className="w-full h-full object-cover" playsInline/>
     </div>
   )  
 }
