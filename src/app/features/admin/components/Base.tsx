@@ -13,15 +13,11 @@ import { useGetAPI } from '@/app/hooks/useGetAPI'
 import ProductsFilter from '@/app/components/ProductsFilter'
 
 const Base = () => {
-  const router = useRouter()
-
-  const limit = 20
-  const updatedDays = 30
   const {data: asset, isLoading: assetLoading, error: assetError} = useGetAPI<Asset>(
     `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/assets`
   )
 
-  if(assetLoading) return(<Loading message='商品情報取得中'/>)
+  if(assetLoading) return(<Loading message=''/>)
   if(assetError || !asset) return(<div>読み込み失敗</div>)
   return (
     <div className='mb-10 md:pt-5 pt-0'>
