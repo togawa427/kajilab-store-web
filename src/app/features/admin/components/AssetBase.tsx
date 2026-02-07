@@ -1,5 +1,6 @@
 "use client"
 import { getAssetHistory } from '@/api';
+import { AdminPageTitle } from '@/app/components/AdminPageTitle';
 import { AssetHistory } from '@/types/response';
 import { AreaChart } from '@mantine/charts'
 import '@mantine/charts/styles.css';
@@ -59,7 +60,11 @@ function AssetBase({assetsHistory}: AssetBaseProps) {
   }
 
   return (
-    <div>
+    <div className='mb-10 md:pt-5 pt-0'>
+      <AdminPageTitle
+        title='資産推移グラフ'
+        subtitle='Asset Graph'
+      />
       <div className="text-end">
         <div>
           更新日時：{responseTime}

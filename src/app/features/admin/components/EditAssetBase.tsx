@@ -1,5 +1,6 @@
 'use client'
 import { putAsset } from '@/api';
+import { AdminPageTitle } from '@/app/components/AdminPageTitle';
 import { Button, NumberInput } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import React, { useState } from 'react'
@@ -35,7 +36,11 @@ function EditAssetBase({currentMoney, currentDebt}: EditAssetBaseProps) {
   })
 
   return (
-    <div>
+    <div className='mb-10 md:pt-5 pt-0'>
+      <AdminPageTitle
+        title='残高修正'
+        subtitle='Edit Asset'
+      />
       <div className="max-w-3xl mx-auto px-3 py-2 bg-white rounded-sm shadow">
         <div className='text-xl font-bold'>現在の資産</div>
         <div>現金：{currentMoney}円</div>

@@ -87,9 +87,6 @@ function LinkSelect() {
         <Menu.Item color='black' onClick={handleUrlAdminEditAsset} className="text-lg text-kirby-star font-semibold hover:bg-kirby-blue underline-offset-4 hover:underline hover:decoration-white">
           残高修正
         </Menu.Item>
-        <Menu.Item color='black' onClick={handleUrlAdminInventory} className="text-lg text-kirby-star font-semibold hover:bg-kirby-blue underline-offset-4 hover:underline hover:decoration-white">
-          棚卸し
-        </Menu.Item>
         </div>
       </Menu.Dropdown>
     </Menu>

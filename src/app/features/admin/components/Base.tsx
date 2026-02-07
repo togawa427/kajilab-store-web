@@ -7,6 +7,8 @@ import { Asset, Product, Products } from '@/types/response'
 import Link from 'next/link'
 import Loading from '@/app/components/Loading'
 import { useRouter, useSearchParams } from 'next/navigation'
+import { PageTitle } from '@/app/components/PageTitle'
+import { AdminPageTitle } from '@/app/components/AdminPageTitle'
 
 type BasePropsType = {
   currentAsset: Asset;
@@ -55,7 +57,11 @@ const Base = ({currentAsset}: BasePropsType) => {
   if(resProducts == null)  return(<Loading message='商品情報取得中'/>)
   if(isError) return(<div>読み込み失敗</div>)
   return (
-    <>
+    <div className='mb-10 md:pt-5 pt-0'>
+      <AdminPageTitle
+        title='管理者用商品一覧'
+        subtitle='Protucts'
+      />
       <Link href={`/admin/asset`} className="text-end">
         <div>
           <div className="text-lg">商店残高（現金）：{currentAsset.money}円</div>
@@ -96,7 +102,7 @@ const Base = ({currentAsset}: BasePropsType) => {
           </div>
         </>
       )}
-    </>
+    </div>
   )
 }
 

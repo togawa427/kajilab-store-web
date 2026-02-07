@@ -20,7 +20,8 @@ const customColors = {
     lightpink: '#FD8AB9',
     pink: '#E6518C',
     lightorange: '#FD8E44',
-    orange: 'FD6805',
+    orange: '#FD6805',
+    purple: '#8C4BC0',
     DEFAULT: '#0F005B'
   }
 }
