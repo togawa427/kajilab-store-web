@@ -10,6 +10,7 @@ import { useRouter } from 'next/navigation'
 import { IconArrowRight } from '@tabler/icons-react'
 import { useGetAPI } from '@/app/hooks/useGetAPI'
 import { PageTitle } from '@/app/components/PageTitle'
+import ProductsFilter from '@/app/components/ProductsFilter'
 
 const Base = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -44,7 +45,14 @@ const Base = () => {
         title='商品在庫一覧'
         subtitle='Products Stock'
       />
-      <div className="flex justify-center">
+
+      <div className='my-5'>
+        <ProductsFilter
+          editable={false}
+        />
+      </div>
+      
+      {/* <div className="flex justify-center">
         <Pagination 
           value={currentPage}
           onChange={setCurrentPage}
@@ -52,31 +60,27 @@ const Base = () => {
           size="lg"
           color="#FD8AB9"
         />
-      </div>
-      {loading ? (
-        <Loading message='商品情報取得中' />
-      ) : (
-        <>
-          <div className="flex flex-wrap justify-center">
-            {products.products.map((product) => (
-              <div key={product.id} className="mx-1 my-1">
-                <HomeCompont.ProductCard
-                  product={product}
-                />
-              </div>
-            ))}
-          </div>
-          <div className="flex justify-center">
-            <Pagination
-              value={currentPage}
-              onChange={setCurrentPage}
-              total={(products.total_count/20)+1}
-              size="lg"
-              color="#FD8AB9"
-            />
-          </div>
-        </>
-      )}
+      </div> */}
+      <>
+        {/* <div className="flex flex-wrap justify-center">
+          {products.products.map((product) => (
+            <div key={product.id} className="mx-1 my-1">
+              <HomeCompont.ProductCard
+                product={product}
+              />
+            </div>
+          ))}
+        </div> */}
+        {/* <div className="flex justify-center">
+          <Pagination
+            value={currentPage}
+            onChange={setCurrentPage}
+            total={(products.total_count/20)+1}
+            size="lg"
+            color="#FD8AB9"
+          />
+        </div> */}
+      </>
     </div>
   )
 }
