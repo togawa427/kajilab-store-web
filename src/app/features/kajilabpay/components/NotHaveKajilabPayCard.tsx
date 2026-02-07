@@ -16,6 +16,7 @@ function NotHaveKajilabPayCard({setUserBarcode, setName, setQRcodeUrl}: NotHaveK
   const [validateMessage, setValidateMessage] = useState("")
   const [isSubmitting, setIsSubmitting] = useState(false)
   
+  //
   const validate = () => {
     if(newName.length === 0) {
       setValidateMessage("ニックネームを入力してください")
