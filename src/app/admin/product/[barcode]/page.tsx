@@ -6,10 +6,9 @@ export default async function AdminProductPage({
 }: {
   params: {barcode: number};
 }) {
-  const product = await getProductByBarcode(params.barcode);
   return (
     <div>
-      <Admin.ProductEditor product={product}/>
+      <Admin.ProductEditor barcode={params.barcode.toString()}/>
     </div>
   )
 }
