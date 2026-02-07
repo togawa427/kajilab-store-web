@@ -52,7 +52,7 @@ const Base = () => {
       console.log(res.data)
       setUserBarcode(res.data.barcode)
       setUserName(res.data.name)
-      setUserQRCodeURL(`${process.env.NEXT_PUBLIC_BASE_URL}/balanceInqueryQR/${res.data.balance_qr_payload}`)
+      setUserQRCodeURL(`${process.env.NEXT_PUBLIC_WEB_URL}/balanceInqueryQR/${res.data.balance_qr_payload}`)
     } catch (error) {
       if (axios.isAxiosError(error)) {
         console.error("エラー発生:", error.response?.status)

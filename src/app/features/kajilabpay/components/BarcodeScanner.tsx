@@ -12,7 +12,7 @@ export default function BarcodeScanner({handleScan}: BarcodeScannerProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const controlsRef = useRef<{ stop: () => void } | null>(null);
 
-  const startScan = () => {
+  const startScan = async () => {
     const hints = new Map();
     hints.set(DecodeHintType.POSSIBLE_FORMATS, [
       BarcodeFormat.CODE_128,
@@ -25,6 +25,18 @@ export default function BarcodeScanner({handleScan}: BarcodeScannerProps) {
     ]);
 
     const codeReader = new BrowserMultiFormatReader(hints);
+
+    const constraints: MediaStreamConstraints = {
+      video: {
+        facingMode: { ideal: "environment" }, // 背面カメラ
+        width: { ideal: 1920 },               // フルHD
+        height: { ideal: 1080 },
+        // focusMode: "continuous",              // 対応端末のみ
+      },
+      audio: false,
+    };
+
+    const stream = await navigator.mediaDevices.getUserMedia(constraints);
 
     codeReader.decodeFromVideoDevice(
       undefined, // デフォルトカメラ
