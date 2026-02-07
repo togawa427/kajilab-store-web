@@ -92,11 +92,15 @@ function KajilabPayMobileCanvas({userBarcode, name, qrcodeUrl}: KajilabPayMobile
     // 残高照会QR部分
     let zandakaWidth = 277
     let zandakaHeight = nameHeight
+    ctx.font = "20px sans-serif";
+    ctx.textAlign = "start"
+    ctx.fillText("↓スマホで読み取って残高確認", contentStartX+nameWidth+20, imgHeight+230)
     ctx.fillStyle = "#FFFFFF"
     ctx.fillRect(contentStartX+nameWidth+20, imgHeight+250, zandakaWidth, zandakaHeight)
     ctx.fillStyle = "#000000"
     ctx.font = "8px sans-serif";
     ctx.textBaseline = "bottom"
+    ctx.textAlign = "center"
     ctx.fillText(qrcodeUrl, contentStartX + nameWidth + 20 + (zandakaWidth/2), imgHeight+249+(zandakaHeight))
     QRCode.toDataURL(qrcodeUrl, { width: 200 }).then((url) => {
       const img = new Image();
