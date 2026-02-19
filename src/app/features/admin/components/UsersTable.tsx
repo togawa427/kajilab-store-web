@@ -16,7 +16,7 @@ const UsersTable = ({users}: UsersTableProps) => {
         <th>登録日</th>
       </tr>
       {users.map((user) => (
-        <tr className="text-center border">
+        <tr key={user.barcode} className="text-center border">
           <td>{user.name}</td>
           <td>{user.barcode}</td>
           <td className="text-end">{user.debt}円</td>
