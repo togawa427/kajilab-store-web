@@ -20,6 +20,21 @@ export type Products = {
   total_count: number;
 }
 
+export type GetUsers = {
+  users:      GetUser[]
+	total_count: number
+}
+
+export type GetUser = {
+  name:             string
+	created_at:        Date
+	updated_at:        Date
+	barcode:          string
+	balance_qr_payload: string
+	debt:             number
+	total_pay:         number
+}
+
 export type User = {
   id: number;
   name: string;
