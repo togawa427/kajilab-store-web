@@ -12,7 +12,7 @@ export const ArriveLogList = ({arrives}: ArriveLogListProps) => {
   return (
     <div className=''>
       {arrives.map((arrive) => (
-        <div className='bg-white rounded my-3'>
+        <div className='bg-white rounded my-3' key={arrive.arrive_at}>
           <div>
             <div className='
               font-bold flex
@@ -27,7 +27,7 @@ export const ArriveLogList = ({arrives}: ArriveLogListProps) => {
           <div className='h-0.5 bg-gray-200'/>
           <div className='px-1 md:px-2 text-sm md:text-xl'>
             {arrive.products.map((product) => (
-              <div className='flex'>
+              <div className='flex' key={`${product.barcode}${arrive.arrive_at}`}>
                 <p>{product.name} x {product.quantity}</p>
                 <p className='ml-auto'>¥ {product.value * product.quantity}</p>
               </div>
