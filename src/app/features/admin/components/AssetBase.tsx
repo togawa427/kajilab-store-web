@@ -30,7 +30,7 @@ function AssetBase() {
   const [responseTime, setResponseTime] = useState("");
 
   const {data: assetsHistory, isLoading, error} = useGetAPI<AssetHistory[]>(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/assets/history?day=365`
+    `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/assets/history?day=730`
   )
   
 
