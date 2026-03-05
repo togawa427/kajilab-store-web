@@ -7,7 +7,7 @@ import React from 'react'
 
 function LinkSelect() {
   const router = useRouter();
-  
+
   const handleUrlPaymentMonth = () => {
     const currentDate = new Date()
     console.log(currentDate)
@@ -60,6 +60,9 @@ function LinkSelect() {
         </Menu.Label>
         <Menu.Item color='black' onClick={() => handleUrl("/admin/products")} className="text-lg text-kirby-star font-semibold hover:bg-kirby-blue underline-offset-4 hover:underline hover:decoration-white">
           商品一覧
+        </Menu.Item>
+        <Menu.Item color='black' onClick={() => handleUrl("/admin/arrive")} className="text-lg text-kirby-star font-semibold hover:bg-kirby-blue underline-offset-4 hover:underline hover:decoration-white">
+          入荷履歴
         </Menu.Item>
         <Menu.Item color='black' onClick={() => handleUrl("/admin/asset")} className="text-lg text-kirby-star font-semibold hover:bg-kirby-blue underline-offset-4 hover:underline hover:decoration-white">
           資産推移グラフ

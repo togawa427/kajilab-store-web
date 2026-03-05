@@ -88,3 +88,17 @@ export type KajilabPayMobile = {
   barcode: string;
   balance_qr_payload: string;
 }
+
+export type GetArrive = {
+  money: number
+  value: number
+  arrive_at: string
+  products: GetArriveProduct[]
+}
+
+export type GetArriveProduct = {
+  name: string
+  barcode: number
+  quantity: number
+  value: number
+}
