@@ -7,14 +7,6 @@ import { PageTitle } from '@/app/components/PageTitle'
 import ProductsFilter from '@/app/components/ProductsFilter'
 
 const Base = () => {
-  const limit = 20
-  const updatedDays = 30
-  const {data: products, isLoading: loading, error} = useGetAPI<Products>(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/products?limit=${limit}&&updated_days=${updatedDays}`
-  )
-
-  if(loading) return(<Loading message='商品情報取得中'/>)
-  if(error || !products) return(<div>読み込み失敗</div>)
   return (
     <div className="mb-10 md:pt-5 pt-0">
       <PageTitle

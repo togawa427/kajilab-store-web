@@ -7,7 +7,7 @@ import * as Admin from "@/app/features/admin/components/Index"
 
 const UsersBase = () => {
   const {data: resUsers, isLoading, error} = useGetAPI<GetUsers>(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/users?limit=999`
+    `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/users?limit=50`
   )
 
   if(isLoading) return(<Loading message='ユーザ情報取得中'/>)
@@ -18,8 +18,17 @@ const UsersBase = () => {
         title='梶研Pay利用者'
         subtitle='Kajilab Pay Users'
       />
-      
+
+      <p className="text-end text-xs md:text-base">（最大50件）</p>
       <Admin.UsersTable users={resUsers.users} />
+      <a 
+        href="https://console.cloud.google.com/storage/browser/kajilab-store.appspot.com/backup;tab=objects?hl=tr&project=kajilab-store&prefix=&forceOnObjectsSortingFiltering=false"
+        className="text-end text-xs md:text-base ml-auto underline"
+        target="_blank"
+        rel="noopener"
+      >
+        （詳細はCloudStorageにて）
+      </a>
     </div>
   )
 }

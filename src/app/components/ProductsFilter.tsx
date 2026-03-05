@@ -82,6 +82,13 @@ export default function ProductsFilter({editable}: ProductsFilterProps) {
           ))}
         </div>
       </div>
+
+      <p className='
+        text-center text-gray-500 mt-2
+        text-xs md:text-base
+      '>
+        注）在庫が1個以上または直近販売が30日以下の商品のみ表示しています
+      </p>
     </div>
   )
 }
