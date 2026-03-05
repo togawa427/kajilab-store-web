@@ -1,6 +1,8 @@
 "use client"
 import { getAssetHistory } from '@/api';
 import { AdminPageTitle } from '@/app/components/AdminPageTitle';
+import Loading from '@/app/components/Loading';
+import { useGetAPI } from '@/app/hooks/useGetAPI';
 import { AssetHistory } from '@/types/response';
 import { AreaChart } from '@mantine/charts'
 import '@mantine/charts/styles.css';
@@ -21,17 +23,19 @@ type AssetSubChartData = {
   realAsset: number;
 }
 
-type AssetBaseProps = {
-  assetsHistory: AssetHistory[];
-}
-
-function AssetBase({assetsHistory}: AssetBaseProps) {
+function AssetBase() {
   const [assetsMainChartData, setAssetsMainChartData] = useState<Array<AssetMainChartData>>([]);
   const [assetsSubChartData, setAssetsSubChartData] = useState<Array<AssetSubChartData>>([]);
   const [selectedDay, setSelectedDay] = useState('30');
   const [responseTime, setResponseTime] = useState("");
+
+  const {data: assetsHistory, isLoading, error} = useGetAPI<AssetHistory[]>(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/assets/history?day=365`
+  )
   
+
   useEffect(() => {
+    if(!assetsHistory) return
     let tmpAssetsHistory = assetsHistory.slice(assetsHistory.length-parseInt(selectedDay))
       let tmpAssetsMainChartData:AssetMainChartData[] = []
       let tmpAssetsChartData:AssetSubChartData[] = []
@@ -59,6 +63,8 @@ function AssetBase({assetsHistory}: AssetBaseProps) {
     setSelectedDay(day)
   }
 
+  if(isLoading || !assetsHistory) return <Loading message=''/>
+  if(error) return <>サーバエラー</>
   return (
     <div className='mb-10 md:pt-5 pt-0'>
       <AdminPageTitle
@@ -77,6 +83,8 @@ function AssetBase({assetsHistory}: AssetBaseProps) {
             { label: '2ヶ月', value: '60' },
             { label: '3ヶ月', value: '90' },
             { label: '6ヶ月', value: '180' },
+            { label: '12ヶ月', value: '365'},
+            { label: '24ヶ月', value: '730'}
           ]}
         />
       </div>
